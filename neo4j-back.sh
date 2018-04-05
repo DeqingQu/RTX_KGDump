@@ -1,15 +1,22 @@
+#   This script is to dump the Neo4j database and transfer the backup file to http://rtxkgdump.saramsey.org/
+#   If you want to run the script, you can log in to the 'rtxsteve.saramesy.org' instance, then log in to the 'kgdump' docker container
+#   As the root user of 'kgdump' docker container, you can run the script in any folder using 'sh neo4j-back.sh'
+#   The backup files will be stored in the /var/www/html folder of the 'rtxkgdump.saramsey.org' instance.
+#   The backup files can be accessed in http://rtxkgdump.saramsey.org/
+
 file=`date '+%m%d%y-%H%M%S'`
 
-echo 'Shut down Neo4j ...'
+echo 'shut down Neo4j ...'
 service neo4j stop
 
-echo 'Start backup ...'
+echo 'start backup ...'
 neo4j-admin dump --database=graph --to=/mnt/data/test/$file.cypher
 
-echo 'Start Neo4j ...'
+echo 'backup complete ...'
+echo 'start Neo4j ...'
 service neo4j start
 
-echo 'zip the backup file'
+echo 'zip the backup file ...'
 cd /mnt/data/test/
 tar -czvf $file.tar.gz $file.cypher
 
