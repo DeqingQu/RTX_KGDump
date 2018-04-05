@@ -10,7 +10,7 @@ echo 'shut down Neo4j ...'
 service neo4j stop
 
 echo 'start backup ...'
-if [ ! -d "/mnt/data/test/"]; then
+if [ ! -d "/mnt/data/test/" ]; then
     mkdir /mnt/data/test/
 fi
 neo4j-admin dump --database=graph --to=/mnt/data/test/$file.cypher
