@@ -21,7 +21,7 @@ cd /mnt/data/test/
 tar -czvf $file.tar.gz $file.cypher
 
 echo 'start transfering the backup file ...'
-su - rt -c 'scp /mnt/data/test/$file.tar.gz ubuntu@52.42.109.175:/var/www/html'
+su - rt -c "scp /mnt/data/test/$file.tar.gz ubuntu@52.42.109.175:/var/www/html"
 
 echo 'file transfer complete ...'
 
