@@ -29,7 +29,7 @@ class HelloWorldExample(object):
         return result.single()[0]
 
 if __name__ == '__main__':
-    obj = HelloWorldExample("bolt://localhost:7687", "neo4j", "88888888")
+    obj = HelloWorldExample("bolt://localhost:7687", "neo4j", "precisionmedicine")
     obj.print_node_count()
     obj.print_relation_count()
     obj.close()
