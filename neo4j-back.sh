@@ -10,6 +10,14 @@
 #   The backup files can be accessed in http://rtxkgdump.saramsey.org/
 ### END INTRO
 
+### BEGIN PREREQUISITE
+#   folder and file permissions on 'rtxkgdump.saramsey.org' instance
+#   user: ubuntu
+#   command:
+#   sudo chown -R ubuntu:ubuntu /var/www/html
+#   sudo chmod -R 755 /var/www/html
+### END PREREQUISITE
+
 # Author: Deqing Qu
 
 set -e
