@@ -1,4 +1,11 @@
 from neo4j.v1 import GraphDatabase
+import json
+
+# user_pass.json format
+# {
+#   "username":"xxx",
+#   "password":"xxx"
+# }
 
 class HelloWorldExample(object):
 
@@ -29,7 +36,13 @@ class HelloWorldExample(object):
         return result.single()[0]
 
 if __name__ == '__main__':
-    obj = HelloWorldExample("bolt://localhost:7687", "neo4j", "precisionmedicine")
+
+    f = open('user_pass.json', 'r')
+    userData = f.read()
+    f.close()
+    user = json.loads(userData)
+
+    obj = HelloWorldExample("bolt://localhost:7687", user['username'], user['password'])
     obj.print_node_count()
     obj.print_relation_count()
     obj.close()
