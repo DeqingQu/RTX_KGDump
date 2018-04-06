@@ -18,21 +18,22 @@ echo 'shut down Neo4j ...'
 service neo4j stop
 
 echo 'start backup ...'
-if [ ! -d "/mnt/data/test/" ]; then
-    mkdir /mnt/data/test/
+if [ ! -d "/mnt/data/backup/" ]; then
+    mkdir /mnt/data/backup/
 fi
-neo4j-admin dump --database=graph --to=/mnt/data/test/$file.cypher
+neo4j-admin dump --database=graph --to=/mnt/data/backup/$file.cypher
 
 echo 'backup complete ...'
 echo 'start Neo4j ...'
 service neo4j start
 
 echo 'zip the backup file ...'
-cd /mnt/data/test/
+cd /mnt/data/backup/
 tar -czvf $file.tar.gz $file.cypher
 
 echo 'start transfering the backup file ...'
-su - rt -c "scp /mnt/data/test/$file.tar.gz ubuntu@52.42.109.175:/var/www/html"
+chwon rt:rt $file.tar.gz
+su - rt -c "scp /mnt/data/backup/$file.tar.gz ubuntu@52.42.109.175:/var/www/html"
 
 echo 'file transfer complete ...'
 
