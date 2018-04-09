@@ -1,9 +1,10 @@
 from neo4j.v1 import GraphDatabase
 import json
 import requests
+import requests_cache
 import sys
 
-class Neo4jConnection(object):
+class Neo4jConnection:
 
     def __init__(self, uri, user, password):
         self._driver = GraphDatabase.driver(uri, auth=(user, password))
@@ -58,6 +59,9 @@ class QueryBioLink:
 
 
 if __name__ == '__main__':
+
+    # configure requests package to use the "orangeboard.sqlite" cache
+    requests_cache.install_cache('orangeboard')
 
     f = open('user_pass.json', 'r')
     userData = f.read()
