@@ -1,8 +1,39 @@
+
+''' This module defines the class QueryBioLink. QueryBioLink class is designed
+to communicate with Monarch APIs and their corresponding data sources. The
+available methods include:
+    * query phenotype for disease
+    * query disease for gene
+    * query gene for disease
+    * query phenotype for gene
+    * query gene for pathway
+    * query label for disease
+    * query label for phenotype
+    * query anatomy for gene
+    * query gene for anatomy
+    * query anatomy for phenotype
+'''
+
+# BEGIN user_pass.json format
+# {
+#   "username":"xxx",
+#   "password":"xxx"
+# }
+# END user_pass.json format
+
+
+__author__ = 'Deqing Qu'
+__copyright__ = 'Oregon State University'
+__credits__ = ['Deqing Qu', 'Stephen Ramsey']
+__license__ = 'MIT'
+__version__ = '0.1.0'
+__maintainer__ = ''
+__email__ = ''
+__status__ = 'Prototype'
+
 from neo4j.v1 import GraphDatabase
 import json
-import requests
-import requests_cache
-import sys
+from QueryBioLinkExtended import QueryBioLinkExtended
 
 class Neo4jConnection:
 
@@ -22,7 +53,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_anatomical_nodes(tx):
-        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
+        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name LIMIT 5")
         return [record["n.name"] for record in result]
 
     @staticmethod
@@ -31,46 +62,7 @@ class Neo4jConnection:
         return result
 
 
-class QueryBioLink:
-    TIMEOUT_SEC = 120
-    API_BASE_URL = 'https://api.monarchinitiative.org/api/bioentity'
-    HANDLER_MAP = {
-        'get_bioentity': 'anatomy/{bioentity_id}'
-    }
-
-    @staticmethod
-    def __access_api(handler):
-
-        url = QueryBioLink.API_BASE_URL + '/' + handler
-
-        try:
-            res = requests.get(url, timeout=QueryBioLink.TIMEOUT_SEC)
-        except requests.exceptions.Timeout:
-            print(url, file=sys.stderr)
-            print('Timeout in QueryBioLink for URL: ' + url, file=sys.stderr)
-            return None
-        status_code = res.status_code
-        if status_code != 200:
-            print(url, file=sys.stderr)
-            print('Status code ' + str(status_code) + ' for url: ' + url, file=sys.stderr)
-            return None
-
-        return res.json()
-
-    @staticmethod
-    def get_bioentity(bioentity_id):
-        handler = QueryBioLink.HANDLER_MAP['get_bioentity'].format(bioentity_id=bioentity_id)
-        results = QueryBioLink.__access_api(handler)
-        result_str = 'UNKNOWN'
-        if results is not None:
-            result_str = results
-        return result_str
-
-
 if __name__ == '__main__':
-
-    # configure requests package to use the "orangeboard.sqlite" cache
-    requests_cache.install_cache('orangeboard')
 
     f = open('user_pass.json', 'r')
     userData = f.read()
@@ -82,7 +74,7 @@ if __name__ == '__main__':
     print(nodes)
 
     for i, node_id in enumerate(nodes):
-        extended_info_json = QueryBioLink.get_bioentity(node_id)
+        extended_info_json = QueryBioLinkExtended.get_bioentity(node_id)
         #   replace double quotes with single quotes
         str_extended_info_json = str(extended_info_json)
         str_extended_info_json = str_extended_info_json.replace('"', "'")
