@@ -28,7 +28,8 @@ class QueryBioLinkExtended:
     TIMEOUT_SEC = 120
     API_BASE_URL = 'https://api.monarchinitiative.org/api/bioentity'
     HANDLER_MAP = {
-        'get_anatomy': 'anatomy/{anatomy_id}'
+        'get_anatomy': 'anatomy/{anatomy_id}',
+        'get_phenotype': 'phenotype/{phenotype_id}'
     }
 
     @staticmethod
@@ -61,6 +62,18 @@ class QueryBioLinkExtended:
             result_str = result_str.replace('"', "'")
         return result_str
 
+    @staticmethod
+    def get_phenotype_entity(phenotype_id):
+        handler = QueryBioLinkExtended.HANDLER_MAP['get_phenotype'].format(phenotype_id=phenotype_id)
+        results = QueryBioLinkExtended.__access_api(handler)
+        result_str = 'UNKNOWN'
+        if results is not None:
+            result_str = str(results)
+            #   replace double quotes with single quotes
+            result_str = result_str.replace('"', "'")
+        return result_str
+
 
 if __name__ == '__main__':
     print(QueryBioLinkExtended.get_anatomy_entity('UBERON:0004476'))
+    print(QueryBioLinkExtended.get_phenotype_entity('HP:0011515'))
