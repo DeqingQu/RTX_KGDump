@@ -61,9 +61,21 @@ def update_anatomy_nodes():
     conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
     nodes = conn.get_anatomical_nodes()
 
-    for i, node_id in enumerate(nodes):
+    from time import time
+    t = time()
+
+    extended_info_array = []
+    for node_id in nodes:
         extended_info_json = QueryBioLinkExtended.get_anatomy_entity(node_id)
-        conn.update_anatomical_node(node_id, extended_info_json)
+        extended_info_array.append(extended_info_json)
+
+    print("api pulling time: %f" % (time()-t))
+    t = time()
+
+    for i, node_id in enumerate(nodes):
+        conn.update_anatomical_node(node_id, extended_info_array[i])
+
+    print("Cypher updaing time: %f" % (time()-t))
 
     conn.close()
 
