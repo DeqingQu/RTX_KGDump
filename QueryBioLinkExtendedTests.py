@@ -14,5 +14,10 @@ class QueryBioLinkExtendedTestCase(unittest.TestCase):
         self.assertIsNotNone(extended_info_json)
         self.assertEqual(extended_info_json, "{'xrefs': None, 'taxon': {'id': None, 'label': None}, 'categories': ['Phenotype'], 'types': None, 'description': None, 'replaced_by': None, 'consider': None, 'synonyms': None, 'deprecated': None, 'id': 'HP:0011515', 'label': 'Abnormal stereopsis'}")
 
+    def test_get_disease_entity(self):
+        extended_info_json = QBLEx.get_disease_entity('DOID:3965')
+        self.assertIsNotNone(extended_info_json)
+        self.assertEqual(extended_info_json, "{'xrefs': None, 'taxon': {'id': None, 'label': None}, 'categories': ['disease', 'quality'], 'types': None, 'description': None, 'replaced_by': None, 'consider': None, 'synonyms': None, 'deprecated': None, 'id': 'DOID:3965', 'label': None}")
+
 if __name__ == '__main__':
     unittest.main()

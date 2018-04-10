@@ -29,7 +29,8 @@ class QueryBioLinkExtended:
     API_BASE_URL = 'https://api.monarchinitiative.org/api/bioentity'
     HANDLER_MAP = {
         'get_anatomy': 'anatomy/{id}',
-        'get_phenotype': 'phenotype/{id}'
+        'get_phenotype': 'phenotype/{id}',
+        'get_disease': 'disease/{id}'
     }
 
     @staticmethod
@@ -70,9 +71,12 @@ class QueryBioLinkExtended:
     def get_phenotype_entity(phenotype_id):
         return QueryBioLinkExtended.__get_entity("get_phenotype", phenotype_id)
 
-
+    @staticmethod
+    def get_disease_entity(disease_id):
+        return QueryBioLinkExtended.__get_entity("get_disease", disease_id)
 
 
 if __name__ == '__main__':
     print(QueryBioLinkExtended.get_anatomy_entity('UBERON:0004476'))
     print(QueryBioLinkExtended.get_phenotype_entity('HP:0011515'))
+    print(QueryBioLinkExtended.get_disease_entity('DOID:3965'))
