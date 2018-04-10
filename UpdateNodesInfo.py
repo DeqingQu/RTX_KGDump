@@ -74,14 +74,20 @@ def update_anatomy_nodes():
 
     nodes_array = []
     for node_id in nodes:
-        node = {}
+        node = dict()
         node['node_id'] = node_id
         node['extended_info_json'] = QueryBioLinkExtended.get_anatomy_entity(node_id)
         nodes_array.append(node)
 
     print("api pulling time: %f" % (time()-t))
 
-    conn.update_anatomical_nodes(nodes_array)
+    nodes_nums = len(nodes_array)
+    group_nums = nodes_nums // 10000 + 1
+    for i in range(group_nums):
+        start = i*10000
+        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+        conn.update_anatomical_nodes(nodes_array[start:end])
+
     print("total time: %f" % (time()-t))
 
     conn.close()
