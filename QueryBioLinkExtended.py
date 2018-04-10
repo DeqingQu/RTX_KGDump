@@ -28,8 +28,8 @@ class QueryBioLinkExtended:
     TIMEOUT_SEC = 120
     API_BASE_URL = 'https://api.monarchinitiative.org/api/bioentity'
     HANDLER_MAP = {
-        'get_anatomy': 'anatomy/{anatomy_id}',
-        'get_phenotype': 'phenotype/{phenotype_id}'
+        'get_anatomy': 'anatomy/{id}',
+        'get_phenotype': 'phenotype/{id}'
     }
 
     @staticmethod
@@ -52,8 +52,8 @@ class QueryBioLinkExtended:
         return res.json()
 
     @staticmethod
-    def get_anatomy_entity(anatomy_id):
-        handler = QueryBioLinkExtended.HANDLER_MAP['get_anatomy'].format(anatomy_id=anatomy_id)
+    def __get_entity(entity_type, entity_id):
+        handler = QueryBioLinkExtended.HANDLER_MAP[entity_type].format(id=entity_id)
         results = QueryBioLinkExtended.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
@@ -63,15 +63,14 @@ class QueryBioLinkExtended:
         return result_str
 
     @staticmethod
+    def get_anatomy_entity(anatomy_id):
+        return QueryBioLinkExtended.__get_entity("get_anatomy", anatomy_id)
+
+    @staticmethod
     def get_phenotype_entity(phenotype_id):
-        handler = QueryBioLinkExtended.HANDLER_MAP['get_phenotype'].format(phenotype_id=phenotype_id)
-        results = QueryBioLinkExtended.__access_api(handler)
-        result_str = 'UNKNOWN'
-        if results is not None:
-            result_str = str(results)
-            #   replace double quotes with single quotes
-            result_str = result_str.replace('"', "'")
-        return result_str
+        return QueryBioLinkExtended.__get_entity("get_phenotype", phenotype_id)
+
+
 
 
 if __name__ == '__main__':
