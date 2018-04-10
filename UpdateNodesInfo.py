@@ -62,22 +62,25 @@ class Neo4jConnection:
         return result
 
 
-if __name__ == '__main__':
+def update_anatomy_nodes():
 
     f = open('user_pass.json', 'r')
-    userData = f.read()
+    user_data = f.read()
     f.close()
-    user = json.loads(userData)
+    user = json.loads(user_data)
 
     conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
     nodes = conn.get_anatomical_nodes()
-    print(nodes)
 
     for i, node_id in enumerate(nodes):
-        extended_info_json = QueryBioLinkExtended.get_bioentity(node_id)
+        extended_info_json = QueryBioLinkExtended.get_anatomy_entity(node_id)
         #   replace double quotes with single quotes
         str_extended_info_json = str(extended_info_json)
         str_extended_info_json = str_extended_info_json.replace('"', "'")
         conn.update_anatomical_node(node_id, str_extended_info_json)
 
     conn.close()
+
+if __name__ == '__main__':
+
+    update_anatomy_nodes()

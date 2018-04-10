@@ -28,7 +28,7 @@ class QueryBioLinkExtended:
     TIMEOUT_SEC = 120
     API_BASE_URL = 'https://api.monarchinitiative.org/api/bioentity'
     HANDLER_MAP = {
-        'get_bioentity': 'anatomy/{bioentity_id}'
+        'get_anatomy': 'anatomy/{anatomy_id}'
     }
 
     @staticmethod
@@ -51,8 +51,8 @@ class QueryBioLinkExtended:
         return res.json()
 
     @staticmethod
-    def get_bioentity(bioentity_id):
-        handler = QueryBioLinkExtended.HANDLER_MAP['get_bioentity'].format(bioentity_id=bioentity_id)
+    def get_anatomy_entity(anatomy_id):
+        handler = QueryBioLinkExtended.HANDLER_MAP['get_anatomy'].format(anatomy_id=anatomy_id)
         results = QueryBioLinkExtended.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
@@ -61,4 +61,4 @@ class QueryBioLinkExtended:
 
 
 if __name__ == '__main__':
-    print(QueryBioLinkExtended.get_bioentity('UBERON:0004476'))
+    print(QueryBioLinkExtended.get_anatomy_entity('UBERON:0004476'))
