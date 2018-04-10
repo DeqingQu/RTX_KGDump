@@ -1,17 +1,7 @@
 
-''' This module defines the class QueryBioLink. QueryBioLink class is designed
-to communicate with Monarch APIs and their corresponding data sources. The
-available methods include:
-    * query phenotype for disease
-    * query disease for gene
-    * query gene for disease
-    * query phenotype for gene
-    * query gene for pathway
-    * query label for disease
-    * query label for phenotype
-    * query anatomy for gene
-    * query gene for anatomy
-    * query anatomy for phenotype
+''' This module defines the class Neo4jConnection. Neo4jConnection class is designed
+to connect to Neo4j database and perform operations on a graphic model object. (e.g.,
+retrieve node and update node)
 '''
 
 # BEGIN user_pass.json format
@@ -20,7 +10,6 @@ available methods include:
 #   "password":"xxx"
 # }
 # END user_pass.json format
-
 
 __author__ = 'Deqing Qu'
 __copyright__ = 'Oregon State University'
@@ -53,7 +42,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_anatomical_nodes(tx):
-        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name LIMIT 5")
+        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
         return [record["n.name"] for record in result]
 
     @staticmethod
