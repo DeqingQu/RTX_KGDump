@@ -36,6 +36,11 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_anatomical_nodes)
 
+    def get_phenomical_nodes(self):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_phenomical_nodes)
+
+
     def update_anatomical_nodes(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_anatomical_nodes, nodes)
@@ -43,6 +48,11 @@ class Neo4jConnection:
     @staticmethod
     def _get_anatomical_nodes(tx):
         result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
+        return [record["n.name"] for record in result]
+
+    @staticmethod
+    def _get_phenomical_nodes(tx):
+        result = tx.run("MATCH (n:phenotypic_feature) RETURN n.name")
         return [record["n.name"] for record in result]
 
     @staticmethod
@@ -92,6 +102,41 @@ def update_anatomy_nodes():
 
     conn.close()
 
+def update_phenotype_nodes():
+
+    f = open('user_pass.json', 'r')
+    user_data = f.read()
+    f.close()
+    user = json.loads(user_data)
+
+    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+    nodes = conn.get_phenomical_nodes()
+
+    print(len(nodes))
+    # from time import time
+    # t = time()
+    #
+    # nodes_array = []
+    # for node_id in nodes:
+    #     node = dict()
+    #     node['node_id'] = node_id
+    #     node['extended_info_json'] = QueryBioLinkExtended.get_anatomy_entity(node_id)
+    #     nodes_array.append(node)
+    #
+    # print("api pulling time: %f" % (time()-t))
+    #
+    # nodes_nums = len(nodes_array)
+    # group_nums = nodes_nums // 10000 + 1
+    # for i in range(group_nums):
+    #     start = i*10000
+    #     end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+    #     conn.update_anatomical_nodes(nodes_array[start:end])
+    #
+    # print("total time: %f" % (time()-t))
+
+    conn.close()
+
 if __name__ == '__main__':
 
-    update_anatomy_nodes()
+    # update_anatomy_nodes()
+    update_phenotype_nodes()
