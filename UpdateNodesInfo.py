@@ -64,18 +64,19 @@ def update_anatomy_nodes():
     from time import time
     t = time()
 
-    extended_info_array = []
+    nodes_array = []
     for node_id in nodes:
-        extended_info_json = QueryBioLinkExtended.get_anatomy_entity(node_id)
-        extended_info_array.append(extended_info_json)
+        node = {}
+        node['node_id'] = node_id
+        node['extended_info_json'] = QueryBioLinkExtended.get_anatomy_entity(node_id)
+        nodes_array.append(node)
 
     print("api pulling time: %f" % (time()-t))
-    t = time()
 
-    for i, node_id in enumerate(nodes):
-        conn.update_anatomical_node(node_id, extended_info_array[i])
+    for node in nodes_array:
+        conn.update_anatomical_node(node['node_id'], node['extended_info_json'])
 
-    print("Cypher updaing time: %f" % (time()-t))
+    print("total time: %f" % (time()-t))
 
     conn.close()
 
