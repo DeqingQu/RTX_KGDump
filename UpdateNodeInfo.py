@@ -16,10 +16,19 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_anatomical_nodes)
 
+    def update_anatomical_node(self, n_id, extended_info_json):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_anatomical_node, n_id, extended_info_json)
+
     @staticmethod
     def _get_anatomical_nodes(tx):
-        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name LIMIT 5")
+        result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
         return [record["n.name"] for record in result]
+
+    @staticmethod
+    def _update_anatomical_node(tx, n_id, extended_info_json):
+        result = tx.run('MATCH (n:anatomical_entity{name:"%s"}) set n.extended_info_json="%s"' % (n_id, extended_info_json))
+        return result
 
 
 class QueryBioLink:
@@ -72,7 +81,11 @@ if __name__ == '__main__':
     nodes = conn.get_anatomical_nodes()
     print(nodes)
 
-    for node in nodes:
-        print(QueryBioLink.get_bioentity(node))
+    for i, node_id in enumerate(nodes):
+        extended_info_json = QueryBioLink.get_bioentity(node_id)
+        #   replace double quotes with single quotes
+        str_extended_info_json = str(extended_info_json)
+        str_extended_info_json = str_extended_info_json.replace('"', "'")
+        conn.update_anatomical_node(node_id, str_extended_info_json)
 
     conn.close()
