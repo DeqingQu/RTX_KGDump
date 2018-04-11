@@ -35,6 +35,64 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve anatomy entities from BioLink API
             node = conn.get_anatomy_node(node_id)
+            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['extended_info_json'])
+            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
+            # print(node['n']['name'])
+            # print(node['n']['extended_info_json'])
+
+        conn.close()
+
+    def test_update_phenotype_entity(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_phenotype_nodes()
+
+        # generate random number array
+        random_indexes = random_int_list(0, len(nodes), 100)
+
+        for i in random_indexes:
+            #   retrieve data from Neo4j
+            node_id = nodes[i]
+            extended_info_json_from_api = QueryBioLinkExtended.get_phenotype_entity(node_id)
+
+            # retrieve phenotype entities from BioLink API
+            node = conn.get_phenotype_node(node_id)
+            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['extended_info_json'])
+            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
+            # print(node['n']['name'])
+            # print(node['n']['extended_info_json'])
+
+        conn.close()
+
+    def test_update_disease_entity(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_disease_nodes()
+
+        # generate random number array
+        random_indexes = random_int_list(0, len(nodes), 100)
+
+        for i in random_indexes:
+            #   retrieve data from Neo4j
+            node_id = nodes[i]
+            extended_info_json_from_api = QueryBioLinkExtended.get_disease_entity(node_id)
+
+            # retrieve phenotype entities from BioLink API
+            node = conn.get_disease_node(node_id)
+            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['name'])
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
             # print(node['n']['name'])

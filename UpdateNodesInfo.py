@@ -60,6 +60,14 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_anatomy_node, id)
 
+    def get_phenotype_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_phenotype_node, id)
+
+    def get_disease_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_disease_node, id)
+
     @staticmethod
     def _get_anatomy_nodes(tx):
         result = tx.run("MATCH (n:anatomical_entity) RETURN n.name LIMIT 900")
@@ -117,6 +125,16 @@ class Neo4jConnection:
     @staticmethod
     def _get_anatomy_node(tx, id):
         result = tx.run("MATCH (n:anatomical_entity{name:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_phenotype_node(tx, id):
+        result = tx.run("MATCH (n:phenotypic_feature{name:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_disease_node(tx, id):
+        result = tx.run("MATCH (n:disease{name:'%s'}) RETURN n" % id)
         return result.single()
 
 
