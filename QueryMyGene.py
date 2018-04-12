@@ -26,10 +26,14 @@ class QueryMyGene:
     @staticmethod
     def get_microRNA_entity(protein_id):
         mg = mygene.MyGeneInfo()
-        result_str = str(mg.query(protein_id, fields='all'))
+        result_str = str(mg.query(protein_id.replace('NCBIGene', 'entrezgene'), fields='all'))
         #   replace double quotes with single quotes
-        return result_str.replace('"', "'")
+        result_str = result_str.replace('"', "'")
+        if len(result_str) > 100:
+            return result_str
+        else:
+            return ""
 
 if __name__ == '__main__':
-    obj = QueryMyGene.get_protein_entity("UniProt:P53814")
-    print(obj)
+    print(QueryMyGene.get_protein_entity("UniProt:P53814"))
+    print(QueryMyGene.get_microRNA_entity("NCBIGene:100616298"))

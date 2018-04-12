@@ -15,11 +15,11 @@ class QueryProteinEntityTestCase(unittest.TestCase):
 
     def test_get_microRNA_entity(self):
 
-        obj = QueryMyGene.get_protein_entity("NCBIGene:100302225")
+        obj = QueryMyGene.get_microRNA_entity("NCBIGene:100302225")
         self.maxDiff = None
         self.assertIsNotNone(obj)
         print(obj)
-        self.assertEqual(obj, "{'max_score': None, 'took': 2, 'total': 0, 'hits': []}")
+        self.assertEqual(obj, "{'max_score': 1.55, 'took': 13, 'total': 1, 'hits': [{'HGNC': '37069', '_id': '100302225', '_score': 1.55, 'accession': {'genomic': ['AC104380.3', 'NC_000008.11'], 'rna': 'NR_031745.1'}, 'alias': 'hsa-mir-2053', 'ensembl': {'gene': 'ENSG00000238399', 'transcript': 'ENST00000459295', 'translation': [], 'type_of_gene': 'miRNA'}, 'entrezgene': 100302225, 'exons': [{'cdsend': 112643583, 'cdsstart': 112643583, 'chr': '8', 'position': [[112643492, 112643583]], 'strand': 1, 'transcript': 'NR_031745', 'txend': 112643583, 'txstart': 112643492}], 'exons_hg19': [{'cdsend': 113655812, 'cdsstart': 113655812, 'chr': '8', 'position': [[113655721, 113655812]], 'strand': 1, 'transcript': 'NR_031745', 'txend': 113655812, 'txstart': 113655721}], 'genomic_pos': {'chr': '8', 'end': 112643583, 'ensemblgene': 'ENSG00000238399', 'start': 112643493, 'strand': 1}, 'genomic_pos_hg19': {'chr': '8', 'end': 113655812, 'start': 113655722, 'strand': 1}, 'map_location': '8q23.3', 'miRBase': 'MI0010487', 'name': 'microRNA 2053', 'pharmgkb': 'PA164722583', 'refseq': {'genomic': 'NC_000008.11', 'rna': 'NR_031745.1'}, 'reporter': {'HTA-2_0': 'TC08000676.hg.1', 'HuGene-2_1': '17072003'}, 'summary': 'microRNAs (miRNAs) are short (20-24 nt) non-coding RNAs that are involved in post-transcriptional regulation of gene expression in multicellular organisms by affecting both the stability and translation of mRNAs. miRNAs are transcribed by RNA polymerase II as part of capped and polyadenylated primary transcripts (pri-miRNAs) that can be either protein-coding or non-coding. The primary transcript is cleaved by the Drosha ribonuclease III enzyme to produce an approximately 70-nt stem-loop precursor miRNA (pre-miRNA), which is further cleaved by the cytoplasmic Dicer ribonuclease to generate the mature miRNA and antisense miRNA star (miRNA*) products. The mature miRNA is incorporated into a RNA-induced silencing complex (RISC), which recognizes target mRNAs through imperfect base pairing with the miRNA and most commonly results in translational inhibition or destabilization of the target mRNA. The RefSeq represents the predicted microRNA stem-loop. [provided by RefSeq, Sep 2009].', 'symbol': 'MIR2053', 'taxid': 9606, 'type_of_gene': 'ncRNA', 'umls': {'cui': 'C2681831'}}]}")
 
 if __name__ == '__main__':
     unittest.main()
