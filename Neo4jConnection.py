@@ -47,6 +47,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._update_phenotype_nodes, nodes)
 
+    def update_protein_nodes(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_protein_nodes, nodes)
+
     def update_disease_nodes(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_disease_nodes, nodes)
@@ -79,7 +83,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_protein_nodes(tx):
-        result = tx.run("MATCH (n:protein) RETURN n.curie_id LIMIT 5")
+        result = tx.run("MATCH (n:protein) RETURN n.curie_id LIMIT 900")
         return [record["n.curie_id"] for record in result]
 
     @staticmethod
@@ -107,6 +111,19 @@ class Neo4jConnection:
             UNWIND {nodes} AS row
             WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
             MATCH (n:phenotypic_feature{name:node_id})
+            SET n.extended_info_json=extended_info_json
+            """,
+            nodes=nodes,
+        )
+        return result
+
+    @staticmethod
+    def _update_protein_nodes(tx, nodes):
+        result = tx.run(
+            """
+            UNWIND {nodes} AS row
+            WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
+            MATCH (n:protein{curie_id:node_id})
             SET n.extended_info_json=extended_info_json
             """,
             nodes=nodes,
