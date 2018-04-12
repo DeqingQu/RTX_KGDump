@@ -155,7 +155,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_protein_node(tx, id):
-        result = tx.run("MATCH (n:protein{name:'%s'}) RETURN n" % id)
+        result = tx.run("MATCH (n:protein{curie_id:'%s'}) RETURN n" % id)
         return result.single()
 
     @staticmethod
