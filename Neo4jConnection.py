@@ -79,8 +79,8 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_protein_nodes(tx):
-        result = tx.run("MATCH (n:protein) RETURN n.name LIMIT 5")
-        return [record["n.name"] for record in result]
+        result = tx.run("MATCH (n:protein) RETURN n.curie_id LIMIT 5")
+        return [record["n.curie_id"] for record in result]
 
     @staticmethod
     def _get_disease_nodes(tx):

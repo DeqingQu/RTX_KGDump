@@ -12,7 +12,7 @@ import json
 
 class Neo4jConnectionTestCase(unittest.TestCase):
 
-    def test_get_protein_nodes(self):
+    def test_get_protein_node(self):
 
         f = open('user_pass.json', 'r')
         user_data = f.read()
@@ -28,7 +28,7 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         conn.close()
 
-    def test_get_protein_node(self):
+    def test_get_protein_nodes(self):
 
         f = open('user_pass.json', 'r')
         user_data = f.read()
@@ -40,7 +40,7 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(len(nodes), 5)
-        self.assertEqual(nodes[0], "P53814")
+        self.assertEqual(nodes[0], "UniProt:P53814")
 
         conn.close()
 
