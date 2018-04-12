@@ -14,7 +14,7 @@ __status__ = 'Prototype'
 import mygene
 
 
-class QueryProteinEntity:
+class QueryMyGene:
 
     @staticmethod
     def get_protein_entity(protein_id):
@@ -23,6 +23,13 @@ class QueryProteinEntity:
         #   replace double quotes with single quotes
         return result_str.replace('"', "'")
 
+    @staticmethod
+    def get_microRNA_entity(protein_id):
+        mg = mygene.MyGeneInfo()
+        result_str = str(mg.query(protein_id, fields='all'))
+        #   replace double quotes with single quotes
+        return result_str.replace('"', "'")
+
 if __name__ == '__main__':
-    obj = QueryProteinEntity.get_protein_entity("UniProt:P53814")
+    obj = QueryMyGene.get_protein_entity("UniProt:P53814")
     print(obj)

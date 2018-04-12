@@ -1,7 +1,7 @@
 import unittest
 from UpdateNodesInfo import Neo4jConnection
 from QueryBioLinkExtended import QueryBioLinkExtended
-from QueryProteinEntity import QueryProteinEntity
+from QueryMyGene import QueryMyGene
 import json
 import random
 
@@ -88,7 +88,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         for i in random_indexes:
             #   retrieve data from Neo4j
             node_id = nodes[i]
-            extended_info_json_from_api = QueryProteinEntity.get_protein_entity(node_id)
+            extended_info_json_from_api = QueryMyGene.get_protein_entity(node_id)
 
             # retrieve phenotype entities from BioLink API
             node = conn.get_protein_node(node_id)

@@ -23,7 +23,7 @@ __status__ = 'Prototype'
 from Neo4jConnection import Neo4jConnection
 import json
 from QueryBioLinkExtended import QueryBioLinkExtended
-from QueryProteinEntity import QueryProteinEntity
+from QueryMyGene import QueryMyGene
 
 def update_anatomy_nodes():
 
@@ -110,7 +110,7 @@ def update_protein_nodes():
     for node_id in nodes:
         node = dict()
         node['node_id'] = node_id
-        node['extended_info_json'] = QueryProteinEntity.get_protein_entity(node_id)
+        node['extended_info_json'] = QueryMyGene.get_protein_entity(node_id)
         nodes_array.append(node)
 
     print("api pulling time: %f" % (time()-t))
