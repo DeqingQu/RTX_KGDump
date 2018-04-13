@@ -2,6 +2,7 @@ import unittest
 from UpdateNodesInfo import Neo4jConnection
 from QueryBioLinkExtended import QueryBioLinkExtended
 from QueryMyGene import QueryMyGene
+from QueryReactomeExtended import QueryReactomeExtended
 import json
 import random
 
@@ -96,8 +97,36 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['name'])
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            print(node['n']['name'])
-            print(node['n']['extended_info_json'])
+            # print(node['n']['name'])
+            # print(node['n']['extended_info_json'])
+
+        conn.close()
+
+    def test_update_pathway_entity(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_pathway_nodes()
+
+        # generate random number array
+        random_indexes = random_int_list(0, len(nodes)-1, 100)
+
+        for i in random_indexes:
+            #   retrieve data from Neo4j
+            node_id = nodes[i]
+            extended_info_json_from_api = QueryReactomeExtended.get_pathway_entity(node_id)
+
+            # retrieve phenotype entities from BioLink API
+            node = conn.get_pathway_node(node_id)
+            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['extended_info_json'])
+            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
+            # print(node['n']['name'])
+            # print(node['n']['extended_info_json'])
 
         conn.close()
 
@@ -120,6 +149,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve phenotype entities from BioLink API
             node = conn.get_protein_node(node_id)
+            self.maxDiff = None
             self.assertIsNotNone(node['n']['curie_id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['curie_id'])

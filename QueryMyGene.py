@@ -21,7 +21,11 @@ class QueryMyGene:
         mg = mygene.MyGeneInfo()
         result_str = str(mg.query(protein_id, fields='all'))
         #   replace double quotes with single quotes
-        return result_str.replace('"', "'")
+        result_str = result_str.replace('"', "'")
+        if len(result_str) > 100:
+            return result_str
+        else:
+            return ""
 
     @staticmethod
     def get_microRNA_entity(protein_id):
