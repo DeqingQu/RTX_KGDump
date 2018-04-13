@@ -35,6 +35,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_microRNA_nodes)
 
+    def get_pathway_nodes(self):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_pathway_nodes)
+
     def get_protein_nodes(self):
         with self._driver.session() as session:
             return session.write_transaction(self._get_protein_nodes)
@@ -96,6 +100,11 @@ class Neo4jConnection:
     @staticmethod
     def _get_microRNA_nodes(tx):
         result = tx.run("MATCH (n:microRNA) RETURN n.name")
+        return [record["n.name"] for record in result]
+
+    @staticmethod
+    def _get_pathway_nodes(tx):
+        result = tx.run("MATCH (n:pathway) RETURN n.name")
         return [record["n.name"] for record in result]
 
     @staticmethod

@@ -12,6 +12,23 @@ import json
 
 class Neo4jConnectionTestCase(unittest.TestCase):
 
+    def test_get_pathway_nodes(self):
+
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_pathway_nodes()
+
+        self.assertIsNotNone(nodes)
+        self.assertEqual(len(nodes), 705)
+        self.assertEqual(nodes[0], "R-HSA-8866654")
+
+        conn.close()
+
+
     def test_get_protein_node(self):
 
         f = open('user_pass.json', 'r')
