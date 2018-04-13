@@ -59,6 +59,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._update_microRNA_nodes, nodes)
 
+    def update_pathway_nodes(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_pathway_nodes, nodes)
+
     def update_protein_nodes(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_protein_nodes, nodes)
@@ -78,6 +82,10 @@ class Neo4jConnection:
     def get_microRNA_node(self, id):
         with self._driver.session() as session:
             return session.write_transaction(self._get_microRNA_node, id)
+
+    def get_pathway_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_pathway_node, id)
 
     def get_protein_node(self, id):
         with self._driver.session() as session:
@@ -157,6 +165,19 @@ class Neo4jConnection:
         return result
 
     @staticmethod
+    def _update_pathway_nodes(tx, nodes):
+        result = tx.run(
+            """
+            UNWIND {nodes} AS row
+            WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
+            MATCH (n:pathway{name:node_id})
+            SET n.extended_info_json=extended_info_json
+            """,
+            nodes=nodes,
+        )
+        return result
+
+    @staticmethod
     def _update_protein_nodes(tx, nodes):
         result = tx.run(
             """
@@ -195,6 +216,11 @@ class Neo4jConnection:
     @staticmethod
     def _get_microRNA_node(tx, id):
         result = tx.run("MATCH (n:microRNA{name:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_pathway_node(tx, id):
+        result = tx.run("MATCH (n:pathway{name:'%s'}) RETURN n" % id)
         return result.single()
 
     @staticmethod
