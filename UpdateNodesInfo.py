@@ -26,212 +26,217 @@ from QueryBioLinkExtended import QueryBioLinkExtended
 from QueryMyGene import QueryMyGene
 from QueryReactomeExtended import QueryReactomeExtended
 
-def update_anatomy_nodes():
+class UpdateNodesInfo:
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+    @staticmethod
+    def update_anatomy_nodes():
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_anatomy_nodes()
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-    from time import time
-    t = time()
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_anatomy_nodes()
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryBioLinkExtended.get_anatomy_entity(node_id)
-        nodes_array.append(node)
+        from time import time
+        t = time()
 
-    print("api pulling time: %f" % (time()-t))
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryBioLinkExtended.get_anatomy_entity(node_id)
+            nodes_array.append(node)
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_anatomy_nodes(nodes_array[start:end])
+        print("api pulling time: %f" % (time()-t))
 
-    print("total time: %f" % (time()-t))
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_anatomy_nodes(nodes_array[start:end])
 
-    conn.close()
+        print("total time: %f" % (time()-t))
 
+        conn.close()
 
-def update_phenotype_nodes():
+    @staticmethod
+    def update_phenotype_nodes():
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_phenotype_nodes()
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_phenotype_nodes()
 
-    from time import time
-    t = time()
+        from time import time
+        t = time()
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryBioLinkExtended.get_phenotype_entity(node_id)
-        nodes_array.append(node)
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryBioLinkExtended.get_phenotype_entity(node_id)
+            nodes_array.append(node)
 
-    print("api pulling time: %f" % (time()-t))
+        print("api pulling time: %f" % (time()-t))
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_phenotype_nodes(nodes_array[start:end])
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_phenotype_nodes(nodes_array[start:end])
 
-    print("total time: %f" % (time()-t))
+        print("total time: %f" % (time()-t))
 
-    conn.close()
+        conn.close()
 
+    @staticmethod
+    def update_microRNA_nodes():
 
-def update_microRNA_nodes():
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_microRNA_nodes()
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_microRNA_nodes()
+        from time import time
+        t = time()
 
-    from time import time
-    t = time()
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryMyGene.get_microRNA_entity(node_id)
+            nodes_array.append(node)
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryMyGene.get_microRNA_entity(node_id)
-        nodes_array.append(node)
+        print("api pulling time: %f" % (time()-t))
 
-    print("api pulling time: %f" % (time()-t))
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_microRNA_nodes(nodes_array[start:end])
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_microRNA_nodes(nodes_array[start:end])
+        print("total time: %f" % (time()-t))
 
-    print("total time: %f" % (time()-t))
+        conn.close()
 
-    conn.close()
+    @staticmethod
+    def update_pathway_nodes():
 
-def update_pathway_nodes():
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_pathway_nodes()
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_pathway_nodes()
+        from time import time
+        t = time()
 
-    from time import time
-    t = time()
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryReactomeExtended.get_pathway_entity(node_id)
+            nodes_array.append(node)
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryReactomeExtended.get_pathway_entity(node_id)
-        nodes_array.append(node)
+        print("api pulling time: %f" % (time()-t))
 
-    print("api pulling time: %f" % (time()-t))
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_pathway_nodes(nodes_array[start:end])
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_pathway_nodes(nodes_array[start:end])
+        print("total time: %f" % (time()-t))
 
-    print("total time: %f" % (time()-t))
+        conn.close()
 
-    conn.close()
+    @staticmethod
+    def update_protein_nodes():
 
-def update_protein_nodes():
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_protein_nodes()
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_protein_nodes()
+        from time import time
+        t = time()
 
-    from time import time
-    t = time()
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryMyGene.get_protein_entity(node_id)
+            nodes_array.append(node)
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryMyGene.get_protein_entity(node_id)
-        nodes_array.append(node)
+        print("api pulling time: %f" % (time()-t))
 
-    print("api pulling time: %f" % (time()-t))
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_protein_nodes(nodes_array[start:end])
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_protein_nodes(nodes_array[start:end])
+        print("total time: %f" % (time()-t))
 
-    print("total time: %f" % (time()-t))
+        conn.close()
 
-    conn.close()
+    @staticmethod
+    def update_disease_nodes():
 
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
 
-def update_disease_nodes():
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_disease_nodes()
 
-    f = open('user_pass.json', 'r')
-    user_data = f.read()
-    f.close()
-    user = json.loads(user_data)
+        from time import time
+        t = time()
 
-    conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
-    nodes = conn.get_disease_nodes()
+        nodes_array = []
+        for node_id in nodes:
+            node = dict()
+            node['node_id'] = node_id
+            node['extended_info_json'] = QueryBioLinkExtended.get_disease_entity(node_id)
+            nodes_array.append(node)
 
-    from time import time
-    t = time()
+        print("api pulling time: %f" % (time()-t))
 
-    nodes_array = []
-    for node_id in nodes:
-        node = dict()
-        node['node_id'] = node_id
-        node['extended_info_json'] = QueryBioLinkExtended.get_disease_entity(node_id)
-        nodes_array.append(node)
+        nodes_nums = len(nodes_array)
+        group_nums = nodes_nums // 10000 + 1
+        for i in range(group_nums):
+            start = i*10000
+            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            conn.update_disease_nodes(nodes_array[start:end])
 
-    print("api pulling time: %f" % (time()-t))
+        print("total time: %f" % (time()-t))
 
-    nodes_nums = len(nodes_array)
-    group_nums = nodes_nums // 10000 + 1
-    for i in range(group_nums):
-        start = i*10000
-        end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
-        conn.update_disease_nodes(nodes_array[start:end])
-
-    print("total time: %f" % (time()-t))
-
-    conn.close()
+        conn.close()
 
 if __name__ == '__main__':
 
-    update_anatomy_nodes()
-    update_phenotype_nodes()
-    update_microRNA_nodes()
-    update_pathway_nodes()
-    update_protein_nodes()
-    update_disease_nodes()
+    UpdateNodesInfo.update_anatomy_nodes()
+    UpdateNodesInfo.update_phenotype_nodes()
+    UpdateNodesInfo.update_microRNA_nodes()
+    UpdateNodesInfo.update_pathway_nodes()
+    UpdateNodesInfo.update_protein_nodes()
+    UpdateNodesInfo.update_disease_nodes()
