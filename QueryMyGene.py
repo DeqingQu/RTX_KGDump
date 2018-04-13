@@ -25,7 +25,7 @@ class QueryMyGene:
         if len(result_str) > 100:
             return result_str
         else:
-            return ""
+            return "UNKNOWN"
 
     @staticmethod
     def get_microRNA_entity(protein_id):
@@ -36,7 +36,7 @@ class QueryMyGene:
         if len(result_str) > 100:
             return result_str
         else:
-            return ""
+            return "UNKNOWN"
 
 if __name__ == '__main__':
     print(QueryMyGene.get_protein_entity("UniProt:P53814"))
