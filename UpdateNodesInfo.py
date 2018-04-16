@@ -44,6 +44,7 @@ class UpdateNodesInfo:
         'pathway': 'QueryReactomeExtended',
         'protein': 'QueryMyGene',
         'disease': 'QueryBioLinkExtended',
+        'chemical_substance': 'QueryMyChem',
     }
 
     @staticmethod
@@ -58,6 +59,7 @@ class UpdateNodesInfo:
         get_nodes_mtd_name = "get_" + node_type + "_nodes"
         get_nodes_mtd = getattr(conn, get_nodes_mtd_name)
         nodes = get_nodes_mtd()
+        print(len(nodes))
 
         from time import time
         t = time()
@@ -76,10 +78,11 @@ class UpdateNodesInfo:
         print("api pulling time: %f" % (time() - t))
 
         nodes_nums = len(nodes_array)
-        group_nums = nodes_nums // 10000 + 1
+        chunk_size = 10000
+        group_nums = nodes_nums // chunk_size + 1
         for i in range(group_nums):
-            start = i * 10000
-            end = (i + 1) * 10000 if (i + 1) * 10000 < nodes_nums else nodes_nums
+            start = i * chunk_size
+            end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
             update_nodes_mtd_name = "update_" + node_type + "_nodes"
             update_nodes_mtd = getattr(conn, update_nodes_mtd_name)
             update_nodes_mtd(nodes_array[start:end])
@@ -112,11 +115,16 @@ class UpdateNodesInfo:
     def update_disease_nodes():
         UpdateNodesInfo.__update_nodes('disease')
 
+    @staticmethod
+    def update_chemical_substance_nodes():
+        UpdateNodesInfo.__update_nodes('chemical_substance')
+
 if __name__ == '__main__':
 
-    UpdateNodesInfo.update_anatomy_nodes()
-    UpdateNodesInfo.update_phenotype_nodes()
-    UpdateNodesInfo.update_microRNA_nodes()
-    UpdateNodesInfo.update_pathway_nodes()
-    UpdateNodesInfo.update_protein_nodes()
-    UpdateNodesInfo.update_disease_nodes()
+    # UpdateNodesInfo.update_anatomy_nodes()
+    # UpdateNodesInfo.update_phenotype_nodes()
+    # UpdateNodesInfo.update_microRNA_nodes()
+    # UpdateNodesInfo.update_pathway_nodes()
+    # UpdateNodesInfo.update_protein_nodes()
+    # UpdateNodesInfo.update_disease_nodes()
+    UpdateNodesInfo.update_chemical_substance_nodes()

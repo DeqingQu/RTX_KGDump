@@ -83,6 +83,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._update_disease_nodes, nodes)
 
+    def update_chemical_substance_nodes(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_chemical_substance_nodes, nodes)
+
     def get_anatomy_node(self, id):
         with self._driver.session() as session:
             return session.write_transaction(self._get_anatomy_node, id)
@@ -218,6 +222,19 @@ class Neo4jConnection:
             UNWIND {nodes} AS row
             WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
             MATCH (n:disease{name:node_id})
+            SET n.extended_info_json=extended_info_json
+            """,
+            nodes=nodes,
+        )
+        return result
+
+    @staticmethod
+    def _update_chemical_substance_nodes(tx, nodes):
+        result = tx.run(
+            """
+            UNWIND {nodes} AS row
+            WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
+            MATCH (n:chemical_substance{name:node_id})
             SET n.extended_info_json=extended_info_json
             """,
             nodes=nodes,

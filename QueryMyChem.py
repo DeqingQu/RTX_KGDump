@@ -39,7 +39,7 @@ class QueryMyChem:
             res = requests.get(url, timeout=QueryMyChem.TIMEOUT_SEC)
         except requests.exceptions.Timeout:
             print(url, file=sys.stderr)
-            print('Timeout in QueryBioLink for URL: ' + url, file=sys.stderr)
+            print('Timeout in QueryMyChem for URL: ' + url, file=sys.stderr)
             return None
         status_code = res.status_code
         if status_code != 200:
@@ -47,8 +47,7 @@ class QueryMyChem:
             print('Status code ' + str(status_code) + ' for url: ' + url, file=sys.stderr)
             return None
 
-        return res.json()
-        # return res.text
+        return res.text
 
     @staticmethod
     def __get_entity(entity_type, entity_id):
@@ -56,20 +55,10 @@ class QueryMyChem:
         results = QueryMyChem.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
-            result_str = str(results)
-            #   replace double quotes with single quotes
-            # result_str = result_str.replace("'", '"')
+            #   remove all \n characters using json api and convert the string to one line
+            json_dict = json.loads(results)
+            result_str = json.dumps(json_dict)
         return result_str
-
-    # def __get_entity(entity_type, entity_id):
-    #     handler = QueryMyChem.HANDLER_MAP[entity_type].format(id=entity_id)
-    #     results = QueryMyChem.__access_api(handler)
-    #     result_str = 'UNKNOWN'
-    #     if results is not None:
-    #         json_dict = json.loads(results)
-    #         result_str = json.dumps(json_dict)
-    #
-    #     return result_str
 
     @staticmethod
     def get_chemical_substance_entity(chemical_substance_id):
@@ -78,6 +67,9 @@ class QueryMyChem:
 
 if __name__ == '__main__':
     result = QueryMyChem.get_chemical_substance_entity('CHEMBL1201217')
+
+    dict_json = json.loads(result)
+
     f = open('mychem.json', 'w')
     f.write(result)
     f.close()
