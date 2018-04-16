@@ -103,6 +103,21 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         conn.close()
 
+    def test_get_chemical_substance_node(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+
+        self.assertIsNotNone(nodes)
+        self.assertEqual(nodes['n']['name'], "CHEMBL1350")
+        self.assertEqual(nodes['n']['curie_id'], "ChEMBL:1350")
+
+        conn.close()
+
     def test_get_chemical_substance_nodes(self):
         f = open('user_pass.json', 'r')
         user_data = f.read()

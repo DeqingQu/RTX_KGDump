@@ -107,6 +107,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_disease_node, id)
 
+    def get_chemical_substance_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_chemical_substance_node, id)
+
     @staticmethod
     def _get_anatomy_nodes(tx):
         result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
@@ -248,4 +252,9 @@ class Neo4jConnection:
     @staticmethod
     def _get_disease_node(tx, id):
         result = tx.run("MATCH (n:disease{name:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_chemical_substance_node(tx, id):
+        result = tx.run("MATCH (n:chemical_substance{name:'%s'}) RETURN n" % id)
         return result.single()
