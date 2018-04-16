@@ -47,7 +47,8 @@ class QueryMyChem:
             print('Status code ' + str(status_code) + ' for url: ' + url, file=sys.stderr)
             return None
 
-        return res.text
+        return res.json()
+        # return res.text
 
     @staticmethod
     def __get_entity(entity_type, entity_id):
@@ -55,10 +56,20 @@ class QueryMyChem:
         results = QueryMyChem.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
-            json_dict = json.loads(results)
-            result_str = json.dumps(json_dict)
-
+            result_str = str(results)
+            #   replace double quotes with single quotes
+            # result_str = result_str.replace("'", '"')
         return result_str
+
+    # def __get_entity(entity_type, entity_id):
+    #     handler = QueryMyChem.HANDLER_MAP[entity_type].format(id=entity_id)
+    #     results = QueryMyChem.__access_api(handler)
+    #     result_str = 'UNKNOWN'
+    #     if results is not None:
+    #         json_dict = json.loads(results)
+    #         result_str = json.dumps(json_dict)
+    #
+    #     return result_str
 
     @staticmethod
     def get_chemical_substance_entity(chemical_substance_id):

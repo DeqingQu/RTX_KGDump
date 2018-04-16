@@ -60,7 +60,7 @@ class QueryBioLinkExtended:
         if results is not None:
             result_str = str(results)
             #   replace double quotes with single quotes
-            result_str = result_str.replace('"', "'")
+            # result_str = result_str.replace('"', "'")
         return result_str
 
     @staticmethod

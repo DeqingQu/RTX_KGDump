@@ -37,7 +37,7 @@ class QueryMyGene:
         mg = mygene.MyGeneInfo()
         result_str = str(mg.query(protein_id.replace('NCBIGene', 'entrezgene'), fields='all'))
         #   replace double quotes with single quotes
-        result_str = result_str.replace('"', "'")
+        # result_str = result_str.replace('"', "'")
         if len(result_str) > 100:
             return result_str
         else:
