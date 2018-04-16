@@ -67,4 +67,7 @@ class QueryMyChem:
 
 if __name__ == '__main__':
     result = QueryMyChem.get_chemical_substance_entity('CHEMBL1201217')
+    f = open('mychem.json', 'w')
+    f.write(result)
+    f.close()
     print(result)
