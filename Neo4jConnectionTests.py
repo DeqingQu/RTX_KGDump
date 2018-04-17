@@ -133,6 +133,36 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         conn.close()
 
+    def test_get_bio_process_node(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_bio_process_node("GO:0097289")
+
+        self.assertIsNotNone(nodes)
+        self.assertEqual(nodes['n']['name'], "GO:0097289")
+        self.assertEqual(nodes['n']['curie_id'], "GO:0097289")
+
+        conn.close()
+
+    def test_get_bio_process_nodes(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_bio_process_nodes()
+
+        self.assertIsNotNone(nodes)
+        self.assertEqual(len(nodes), 21130)
+        self.assertEqual(nodes[0], "GO:0097289")
+
+        conn.close()
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -59,6 +59,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_chemical_substance_nodes)
 
+    def get_bio_process_nodes(self):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_bio_process_nodes)
+
     def update_anatomy_nodes(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_anatomy_nodes, nodes)
@@ -86,6 +90,10 @@ class Neo4jConnection:
     def update_chemical_substance_nodes(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_chemical_substance_nodes, nodes)
+
+    def update_bio_process_nodes(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_bio_process_nodes, nodes)
 
     def get_anatomy_node(self, id):
         with self._driver.session() as session:
@@ -115,6 +123,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_chemical_substance_node, id)
 
+    def get_bio_process_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_bio_process_node, id)
+
     @staticmethod
     def _get_anatomy_nodes(tx):
         result = tx.run("MATCH (n:anatomical_entity) RETURN n.name")
@@ -137,7 +149,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_protein_nodes(tx):
-        result = tx.run("MATCH (n:protein) RETURN n.curie_id LIMIT 500")
+        result = tx.run("MATCH (n:protein) RETURN n.curie_id")
         return [record["n.curie_id"] for record in result]
 
     @staticmethod
@@ -148,6 +160,11 @@ class Neo4jConnection:
     @staticmethod
     def _get_chemical_substance_nodes(tx):
         result = tx.run("MATCH (n:chemical_substance) RETURN n.name")
+        return [record["n.name"] for record in result]
+
+    @staticmethod
+    def _get_bio_process_nodes(tx):
+        result = tx.run("MATCH (n:biological_process) RETURN n.name")
         return [record["n.name"] for record in result]
 
     @staticmethod
@@ -242,6 +259,19 @@ class Neo4jConnection:
         return result
 
     @staticmethod
+    def _update_bio_process_nodes(tx, nodes):
+        result = tx.run(
+            """
+            UNWIND {nodes} AS row
+            WITH row.node_id AS node_id, row.extended_info_json AS extended_info_json
+            MATCH (n:biological_process{name:node_id})
+            SET n.extended_info_json=extended_info_json
+            """,
+            nodes=nodes,
+        )
+        return result
+
+    @staticmethod
     def _get_anatomy_node(tx, id):
         result = tx.run("MATCH (n:anatomical_entity{name:'%s'}) RETURN n" % id)
         return result.single()
@@ -274,4 +304,9 @@ class Neo4jConnection:
     @staticmethod
     def _get_chemical_substance_node(tx, id):
         result = tx.run("MATCH (n:chemical_substance{name:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_bio_process_node(tx, id):
+        result = tx.run("MATCH (n:biological_process{name:'%s'}) RETURN n" % id)
         return result.single()
