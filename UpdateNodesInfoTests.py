@@ -104,7 +104,6 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
-
         conn.close()
 
     def test_update_pathway_entity(self):
@@ -162,7 +161,6 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
-
 
         conn.close()
 

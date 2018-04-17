@@ -73,4 +73,4 @@ if __name__ == '__main__':
     f = open('mychem.json', 'w')
     f.write(result)
     f.close()
-    print(result)
+    print(len(dict_json))
