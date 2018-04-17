@@ -222,6 +222,36 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
         conn.close()
 
+    def test_update_bio_process_entity(self):
+        f = open('user_pass.json', 'r')
+        user_data = f.read()
+        f.close()
+        user = json.loads(user_data)
+
+        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        nodes = conn.get_bio_process_nodes()
+
+        # generate random number array
+        random_indexes = random_int_list(0, len(nodes)-1, 10)
+
+        for i in random_indexes:
+            #   retrieve data from Neo4j
+            node_id = nodes[i]
+            extended_info_json_from_api = QueryBioLinkExtended.get_bio_process_entity(node_id)
+
+            # retrieve phenotype entities from BioLink API
+            node = conn.get_bio_process_node(node_id)
+            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['extended_info_json'])
+            self.assertEqual(node_id, node['n']['name'])
+            self.maxDiff = None
+            self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+                print(json.loads(node['n']['extended_info_json']))
+
+        conn.close()
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -45,6 +45,7 @@ class UpdateNodesInfo:
         'protein': 'QueryMyGene',
         'disease': 'QueryBioLinkExtended',
         'chemical_substance': 'QueryMyChem',
+        'bio_process': 'QueryBioLinkExtended'
     }
 
     @staticmethod
@@ -119,12 +120,17 @@ class UpdateNodesInfo:
     def update_chemical_substance_nodes():
         UpdateNodesInfo.__update_nodes('chemical_substance')
 
+    @staticmethod
+    def update_bio_process_nodes():
+        UpdateNodesInfo.__update_nodes('bio_process')
+
 if __name__ == '__main__':
 
     # UpdateNodesInfo.update_anatomy_nodes()
     # UpdateNodesInfo.update_phenotype_nodes()
     # UpdateNodesInfo.update_microRNA_nodes()
     # UpdateNodesInfo.update_pathway_nodes()
-    UpdateNodesInfo.update_protein_nodes()
+    # UpdateNodesInfo.update_protein_nodes()
     # UpdateNodesInfo.update_disease_nodes()
     # UpdateNodesInfo.update_chemical_substance_nodes()
+    UpdateNodesInfo.update_bio_process_nodes()

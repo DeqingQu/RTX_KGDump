@@ -164,7 +164,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_bio_process_nodes(tx):
-        result = tx.run("MATCH (n:biological_process) RETURN n.name")
+        result = tx.run("MATCH (n:biological_process) RETURN n.name LIMIT 500")
         return [record["n.name"] for record in result]
 
     @staticmethod
