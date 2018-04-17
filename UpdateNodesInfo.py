@@ -125,6 +125,6 @@ if __name__ == '__main__':
     # UpdateNodesInfo.update_phenotype_nodes()
     # UpdateNodesInfo.update_microRNA_nodes()
     # UpdateNodesInfo.update_pathway_nodes()
-    # UpdateNodesInfo.update_protein_nodes()
+    UpdateNodesInfo.update_protein_nodes()
     # UpdateNodesInfo.update_disease_nodes()
-    UpdateNodesInfo.update_chemical_substance_nodes()
+    # UpdateNodesInfo.update_chemical_substance_nodes()

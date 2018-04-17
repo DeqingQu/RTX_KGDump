@@ -16,7 +16,7 @@ __status__ = 'Prototype'
 import requests
 import requests_cache
 import sys
-
+import json
 
 # configure requests package to use the "orangeboard.sqlite" cache
 requests_cache.install_cache('orangeboard')
@@ -46,7 +46,7 @@ class QueryReactomeExtended:
             print('Status code ' + str(status_code) + ' for url: ' + url, file=sys.stderr)
             return None
 
-        return res.json()
+        return res.text
 
     @staticmethod
     def __get_entity(entity_type, entity_id):
@@ -54,9 +54,9 @@ class QueryReactomeExtended:
         results = QueryReactomeExtended.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
-            result_str = str(results)
-            #   replace double quotes with single quotes
-            # result_str = result_str.replace("'", '"')
+            #   remove all \n characters using json api and convert the string to one line
+            json_dict = json.loads(results)
+            result_str = json.dumps(json_dict)
         return result_str
 
     @staticmethod

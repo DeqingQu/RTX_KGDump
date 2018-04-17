@@ -43,8 +43,8 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
@@ -72,8 +72,8 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
@@ -101,8 +101,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+
 
         conn.close()
 
@@ -130,8 +131,8 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
@@ -159,8 +160,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['curie_id'])
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+
 
         conn.close()
 
@@ -188,8 +190,8 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            # print(node['n']['name'])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
@@ -217,10 +219,8 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            print(node['n']['name'])
-            dict_data = json.loads(node['n']['extended_info_json'])
-            print(dict_data["aeolus"])
-            # print(node['n']['extended_info_json'])
+            if node['n']['extended_info_json'] != "UNKNOWN":
+                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
