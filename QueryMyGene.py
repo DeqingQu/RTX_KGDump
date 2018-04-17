@@ -59,5 +59,5 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    save_to_test_file('protein', QueryMyGene.get_protein_entity("UniProt:O60884"))
-    save_to_test_file('microRNA', QueryMyGene.get_microRNA_entity("NCBIGene: 100847086"))
+    save_to_test_file('UniProt:O60884', QueryMyGene.get_protein_entity("UniProt:O60884"))
+    save_to_test_file('NCBIGene: 100847086', QueryMyGene.get_microRNA_entity("NCBIGene: 100847086"))

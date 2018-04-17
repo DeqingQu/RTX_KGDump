@@ -79,4 +79,4 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    save_to_test_file('chemical_substance', QueryMyChem.get_chemical_substance_entity('CHEMBL1201217'))
+    save_to_test_file('CHEMBL1201217', QueryMyChem.get_chemical_substance_entity('CHEMBL1201217'))

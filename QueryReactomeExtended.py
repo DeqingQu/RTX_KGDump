@@ -77,4 +77,4 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    save_to_test_file('pathway', QueryReactomeExtended.get_pathway_entity('R-HSA-5579024'))
+    save_to_test_file('R-HSA-5579024', QueryReactomeExtended.get_pathway_entity('R-HSA-5579024'))

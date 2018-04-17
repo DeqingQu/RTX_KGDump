@@ -95,7 +95,7 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    save_to_test_file('anatomy', QueryBioLinkExtended.get_anatomy_entity('UBERON:0004476'))
-    save_to_test_file('phenotype', QueryBioLinkExtended.get_phenotype_entity('HP:0011515'))
-    save_to_test_file('disease', QueryBioLinkExtended.get_disease_entity('DOID:3965'))
-    save_to_test_file('bio_process', QueryBioLinkExtended.get_bio_process_entity('GO:0097289'))
+    save_to_test_file('UBERON:0004476', QueryBioLinkExtended.get_anatomy_entity('UBERON:0004476'))
+    save_to_test_file('HP:0011515', QueryBioLinkExtended.get_phenotype_entity('HP:0011515'))
+    save_to_test_file('DOID:3965', QueryBioLinkExtended.get_disease_entity('DOID:3965'))
+    save_to_test_file('GO:0097289', QueryBioLinkExtended.get_bio_process_entity('GO:0097289'))

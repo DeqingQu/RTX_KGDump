@@ -21,4 +21,4 @@ class QueryMyChemTestCase(TestCase):
         extended_info_json = QMC.get_chemical_substance_entity('CHEMBL1201217')
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
-        self.assertEqual(extended_info_json, get_from_test_file('chemical_substance'))
+        self.assertEqual(extended_info_json, get_from_test_file('CHEMBL1201217'))
