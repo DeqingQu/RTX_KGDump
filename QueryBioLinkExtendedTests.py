@@ -8,15 +8,14 @@ def get_from_test_file(key):
     test_data = f.read()
     try:
         test_data_dict = json.loads(test_data)
-        print(test_data_dict)
         f.close()
         return test_data_dict[key]
     except ValueError:
         f.close()
         return None
 
-class QueryBioLinkExtendedTestCase(unittest.TestCase):
 
+class QueryBioLinkExtendedTestCase(unittest.TestCase):
 
     def test_get_anatomy_entity(self):
         extended_info_json = QBLEx.get_anatomy_entity('UBERON:0004476')
