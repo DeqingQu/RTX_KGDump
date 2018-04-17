@@ -66,7 +66,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for node_id in nodes:
+        for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             query_class_name = UpdateNodesInfo.GET_QUERY_CLASS[node_type]
@@ -75,6 +75,7 @@ class UpdateNodesInfo:
             get_entity_mtd = getattr(query_class, get_entity_mtd_name)
             node['extended_info_json'] = get_entity_mtd(node_id)
             nodes_array.append(node)
+            print(node_type + " node No. %d" % (i))
 
         print("api pulling time: %f" % (time() - t))
 
@@ -126,11 +127,11 @@ class UpdateNodesInfo:
 
 if __name__ == '__main__':
 
-    # UpdateNodesInfo.update_anatomy_nodes()
-    # UpdateNodesInfo.update_phenotype_nodes()
-    # UpdateNodesInfo.update_microRNA_nodes()
-    # UpdateNodesInfo.update_pathway_nodes()
-    # UpdateNodesInfo.update_protein_nodes()
-    # UpdateNodesInfo.update_disease_nodes()
-    # UpdateNodesInfo.update_chemical_substance_nodes()
+    UpdateNodesInfo.update_anatomy_nodes()
+    UpdateNodesInfo.update_phenotype_nodes()
+    UpdateNodesInfo.update_microRNA_nodes()
+    UpdateNodesInfo.update_pathway_nodes()
+    UpdateNodesInfo.update_protein_nodes()
+    UpdateNodesInfo.update_disease_nodes()
+    UpdateNodesInfo.update_chemical_substance_nodes()
     UpdateNodesInfo.update_bio_process_nodes()
