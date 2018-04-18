@@ -27,12 +27,12 @@ def random_int_list(start, stop, length):
 class UpdateNodesInfoTestCase(unittest.TestCase):
 
     def test_update_anatomy_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_anatomy_nodes()
 
         # generate random number array
@@ -56,12 +56,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_phenotype_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_phenotype_nodes()
 
         # generate random number array
@@ -85,12 +85,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_microRNA_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_microRNA_nodes()
 
         # generate random number array
@@ -114,12 +114,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_pathway_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_pathway_nodes()
 
         # generate random number array
@@ -143,12 +143,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_protein_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_protein_nodes()
 
         # generate random number array
@@ -172,12 +172,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_disease_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_disease_nodes()
 
         # generate random number array
@@ -201,12 +201,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_chemical_substance_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_chemical_substance_nodes()
 
         # generate random number array
@@ -230,12 +230,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         conn.close()
 
     def test_update_bio_process_entity(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_bio_process_nodes()
 
         # generate random number array

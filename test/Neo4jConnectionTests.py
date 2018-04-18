@@ -3,7 +3,7 @@
 #   "username":"xxx",
 #   "password":"xxx"
 # }
-# END user_pass.json format
+# END config.json format
 
 import unittest
 from unittest import TestCase
@@ -14,12 +14,12 @@ import json
 
 class Neo4jConnectionTestCase(unittest.TestCase):
     def test_get_pathway_node(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_pathway_node("R-HSA-8866654")
 
         self.assertIsNotNone(nodes)
@@ -29,12 +29,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_pathway_nodes(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_pathway_nodes()
 
         self.assertIsNotNone(nodes)
@@ -44,12 +44,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_protein_node(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_protein_node("UniProt:P53814")
 
         self.assertIsNotNone(nodes)
@@ -59,12 +59,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_protein_nodes(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_protein_nodes()
 
         self.assertIsNotNone(nodes)
@@ -74,12 +74,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_microRNA_node(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_microRNA_node("NCBIGene:100616151")
 
         self.assertIsNotNone(nodes)
@@ -89,12 +89,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_microRNA_nodes(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_microRNA_nodes()
 
         self.assertIsNotNone(nodes)
@@ -104,12 +104,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_chemical_substance_node(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_chemical_substance_node("CHEMBL1350")
 
         self.assertIsNotNone(nodes)
@@ -119,12 +119,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_chemical_substance_nodes(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_chemical_substance_nodes()
 
         self.assertIsNotNone(nodes)
@@ -134,12 +134,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_bio_process_node(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_bio_process_node("GO:0097289")
 
         self.assertIsNotNone(nodes)
@@ -149,12 +149,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         conn.close()
 
     def test_get_bio_process_nodes(self):
-        f = open('user_pass.json', 'r')
-        user_data = f.read()
+        f = open('config.json', 'r')
+        config_data = f.read()
         f.close()
-        user = json.loads(user_data)
+        config = json.loads(config_data)
 
-        conn = Neo4jConnection("bolt://localhost:7687", user['username'], user['password'])
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_bio_process_nodes()
 
         self.assertIsNotNone(nodes)
