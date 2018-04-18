@@ -6,7 +6,6 @@
 # END config.json format
 
 import unittest
-from unittest import TestCase
 
 from Neo4jConnection import Neo4jConnection
 import json

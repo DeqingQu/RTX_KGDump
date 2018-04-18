@@ -4,15 +4,15 @@
         $ python3 -m unittest tests/UpdateNodesInfoTests.py
 """
 
-
 import unittest
-from UpdateNodesInfo import Neo4jConnection
+import json
+import random
+
+from Neo4jConnection import Neo4jConnection
 from QueryBioLinkExtended import QueryBioLinkExtended
 from QueryMyGene import QueryMyGene
 from QueryReactomeExtended import QueryReactomeExtended
 from QueryMyChem import QueryMyChem
-import json
-import random
 
 
 def random_int_list(start, stop, length):
