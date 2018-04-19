@@ -37,9 +37,10 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         nodes = conn.get_chemical_substance_nodes()
 
         # generate random number array
-        random_indexes = random_int_list(0, len(nodes)-1, 100)
+        random_indexes = random_int_list(0, len(nodes)-1, 10)
 
-        for i in random_indexes:
+        for counter,i in enumerate(random_indexes):
+            print('No%d: %d'%(counter, i))
             #   retrieve data from Neo4j
             node_id = nodes[i]
             extended_info_json_from_api = QueryMyChem.get_chemical_substance_entity(node_id)
