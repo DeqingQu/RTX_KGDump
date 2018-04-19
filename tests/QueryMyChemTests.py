@@ -1,4 +1,4 @@
-from unittest import TestCase
+import unittest
 import json
 
 import os,sys
@@ -19,10 +19,13 @@ def get_from_test_file(key):
         return None
 
 
-class QueryMyChemTestCase(TestCase):
+class QueryMyChemTestCase(unittest.TestCase):
 
     def test_get_chemical_substance_entity(self):
         extended_info_json = QMC.get_chemical_substance_entity('CHEMBL1201217')
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
         self.assertEqual(extended_info_json, get_from_test_file('CHEMBL1201217'))
+
+if __name__ == '__main__':
+    unittest.main()

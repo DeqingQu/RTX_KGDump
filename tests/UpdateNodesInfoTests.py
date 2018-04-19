@@ -14,7 +14,7 @@ sys.path.insert(0,parentdir)
 
 from Neo4jConnection import Neo4jConnection
 from QueryBioLinkExtended import QueryBioLinkExtended
-from QueryMyGene import QueryMyGene
+from QueryMyGeneExtended import QueryMyGeneExtended
 from QueryReactomeExtended import QueryReactomeExtended
 from QueryMyChem import QueryMyChem
 
@@ -103,7 +103,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         for i in random_indexes:
             #   retrieve data from Neo4j
             node_id = nodes[i]
-            extended_info_json_from_api = QueryMyGene.get_microRNA_entity(node_id)
+            extended_info_json_from_api = QueryMyGeneExtended.get_microRNA_entity(node_id)
 
             # retrieve phenotype entities from MyGene API
             node = conn.get_microRNA_node(node_id)
@@ -161,7 +161,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         for i in random_indexes:
             #   retrieve data from Neo4j
             node_id = nodes[i]
-            extended_info_json_from_api = QueryMyGene.get_protein_entity(node_id)
+            extended_info_json_from_api = QueryMyGeneExtended.get_protein_entity(node_id)
 
             # retrieve phenotype entities from MyGene API
             node = conn.get_protein_node(node_id)
@@ -214,7 +214,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         nodes = conn.get_chemical_substance_nodes()
 
         # generate random number array
-        random_indexes = random_int_list(0, len(nodes)-1, 10)
+        random_indexes = random_int_list(0, len(nodes)-1, 100)
 
         for i in random_indexes:
             #   retrieve data from Neo4j
@@ -243,7 +243,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         nodes = conn.get_bio_process_nodes()
 
         # generate random number array
-        random_indexes = random_int_list(0, len(nodes)-1, 10)
+        random_indexes = random_int_list(0, len(nodes)-1, 100)
 
         for i in random_indexes:
             #   retrieve data from Neo4j

@@ -44,9 +44,9 @@ class UpdateNodesInfo:
     GET_QUERY_CLASS = {
         'anatomy': 'QueryBioLinkExtended',
         'phenotype': 'QueryBioLinkExtended',
-        'microRNA': 'QueryMyGene',
+        'microRNA': 'QueryMyGeneExtended',
         'pathway': 'QueryReactomeExtended',
-        'protein': 'QueryMyGene',
+        'protein': 'QueryMyGeneExtended',
         'disease': 'QueryBioLinkExtended',
         'chemical_substance': 'QueryMyChem',
         'bio_process': 'QueryBioLinkExtended'
@@ -134,8 +134,8 @@ if __name__ == '__main__':
     UpdateNodesInfo.update_anatomy_nodes()
     UpdateNodesInfo.update_phenotype_nodes()
     UpdateNodesInfo.update_microRNA_nodes()
-    # UpdateNodesInfo.update_pathway_nodes()
-    # UpdateNodesInfo.update_protein_nodes()
-    # UpdateNodesInfo.update_disease_nodes()
-    # UpdateNodesInfo.update_chemical_substance_nodes()
-    # UpdateNodesInfo.update_bio_process_nodes()
+    UpdateNodesInfo.update_pathway_nodes()
+    UpdateNodesInfo.update_protein_nodes()
+    UpdateNodesInfo.update_disease_nodes()
+    UpdateNodesInfo.update_chemical_substance_nodes()
+    UpdateNodesInfo.update_bio_process_nodes()
