@@ -1,10 +1,10 @@
 import unittest
 from UpdateNodesInfoTests import UpdateNodesInfoTestCase
-from tests.Neo4jConnectionTests import Neo4jConnectionTestCase
-from tests.QueryBioLinkExtendedTests import QueryBioLinkExtendedTestCase
-from tests.QueryMyChemTests import QueryMyChemTestCase
-from tests.QueryMyGeneExtendedTests import QueryMyGeneExtendedTestCase
-from tests.QueryReactomeExtendedTests import QueryReactomeExtendedTestCase
+from Neo4jConnectionTests import Neo4jConnectionTestCase
+from QueryBioLinkExtendedTests import QueryBioLinkExtendedTestCase
+from QueryMyChemTests import QueryMyChemTestCase
+from QueryMyGeneExtendedTests import QueryMyGeneExtendedTestCase
+from QueryReactomeExtendedTests import QueryReactomeExtendedTestCase
 
 
 class UpdateModuleTestSuite(unittest.TestSuite):
