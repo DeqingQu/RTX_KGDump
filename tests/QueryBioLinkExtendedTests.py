@@ -1,6 +1,11 @@
 import unittest
-from QueryBioLinkExtended import QueryBioLinkExtended as QBLEx
 import json
+
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
+
+from QueryBioLinkExtended import QueryBioLinkExtended as QBLEx
 
 
 def get_from_test_file(key):

@@ -6,9 +6,13 @@
 # END config.json format
 
 import unittest
+import json
+
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
 
 from Neo4jConnection import Neo4jConnection
-import json
 
 
 class Neo4jConnectionTestCase(unittest.TestCase):

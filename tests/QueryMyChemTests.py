@@ -1,7 +1,11 @@
 from unittest import TestCase
-from QueryMyChem import QueryMyChem as QMC
 import json
 
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
+
+from QueryMyChem import QueryMyChem as QMC
 
 def get_from_test_file(key):
     f = open('test_data.json', 'r')
