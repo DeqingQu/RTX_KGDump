@@ -43,16 +43,18 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             #   retrieve data from Neo4j
             node_id = nodes[i]
             extended_info_json_from_api = QueryMyChem.get_chemical_substance_entity(node_id)
+            self.assertIsNotNone(extended_info_json_from_api)
+            print(node_id)
 
             # retrieve phenotype entities from BioLink API
-            node = conn.get_chemical_substance_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
-            self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            # node = conn.get_chemical_substance_node(node_id)
+            # self.assertIsNotNone(node['n']['name'])
+            # self.assertIsNotNone(node['n']['extended_info_json'])
+            # self.assertEqual(node_id, node['n']['name'])
             self.maxDiff = None
             #self.assertEqual(extended_info_json_from_api, node['n']['extended_info_json'])
-            if node['n']['extended_info_json'] != "UNKNOWN":
-                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+            # if node['n']['extended_info_json'] != "UNKNOWN":
+            #     self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
 
         conn.close()
 
