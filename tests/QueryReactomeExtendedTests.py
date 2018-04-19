@@ -24,7 +24,6 @@ class QueryReactomeExtendedTestCase(unittest.TestCase):
         extended_info_json = QREx.get_pathway_entity('R-HSA-5579024')
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
-        # self.assertEqual(extended_info_json, get_from_test_file('R-HSA-5579024'))
         if extended_info_json != "UNKNOWN":
             self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('R-HSA-5579024')))
 

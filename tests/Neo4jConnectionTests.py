@@ -1,5 +1,6 @@
-# BEGIN user_pass.json format
+# BEGIN config.json format
 # {
+#   "url":"bolt://localhost:7687"
 #   "username":"xxx",
 #   "password":"xxx"
 # }
