@@ -37,7 +37,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
         nodes = conn.get_chemical_substance_nodes()
 
         # generate random number array
-        random_indexes = random_int_list(0, len(nodes)-1, 10)
+        random_indexes = random_int_list(0, len(nodes)-1, 2)
 
         for counter,i in enumerate(random_indexes):
             print('No%d: %d'%(counter, i))
@@ -58,6 +58,31 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
         conn.close()
 
+    def test_get_chemical_substance_node(self):
+        f = open('config.json', 'r')
+        config_data = f.read()
+        f.close()
+        config = json.loads(config_data)
+
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
+        node = conn.get_chemical_substance_node("CHEMBL1350")
+
+        self.assertIsNotNone(node)
+        self.assertEqual(node['n']['name'], "CHEMBL1350")
+        self.assertEqual(node['n']['curie_id'], "ChEMBL:1350")
+
+        node = conn.get_chemical_substance_node("CHEMBL2007641")
+        self.assertIsNotNone(node)
+        node = conn.get_chemical_substance_node("CHEMBL1434")
+        self.assertIsNotNone(node)
+        node = conn.get_chemical_substance_node("CHEMBL1350")
+        self.assertIsNotNone(node)
+        node = conn.get_chemical_substance_node("CHEMBL472566")
+        self.assertIsNotNone(node)
+        node = conn.get_chemical_substance_node("CHEMBL1660")
+        self.assertIsNotNone(node)
+
+        conn.close()
 
 if __name__ == '__main__':
     unittest.main()

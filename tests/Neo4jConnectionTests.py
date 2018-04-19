@@ -119,6 +119,12 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         self.assertEqual(nodes['n']['name'], "CHEMBL1350")
         self.assertEqual(nodes['n']['curie_id'], "ChEMBL:1350")
 
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+        nodes = conn.get_chemical_substance_node("CHEMBL1350")
+
         conn.close()
 
     def test_get_chemical_substance_nodes(self):
