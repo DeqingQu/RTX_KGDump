@@ -42,7 +42,6 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(len(nodes), 705)
-        self.assertEqual(nodes[0], "R-HSA-5619104")
 
         conn.close()
 
@@ -72,7 +71,6 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(len(nodes), 18954)
-        self.assertEqual(nodes[0], "UniProt:O60884")
 
         conn.close()
 
@@ -102,7 +100,6 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(len(nodes), 1695)
-        self.assertEqual(nodes[0], "NCBIGene:100847086")
 
         conn.close()
 
@@ -119,12 +116,6 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         self.assertEqual(nodes['n']['name'], "CHEMBL1350")
         self.assertEqual(nodes['n']['curie_id'], "ChEMBL:1350")
 
-        nodes = conn.get_chemical_substance_node("CHEMBL1350")
-        nodes = conn.get_chemical_substance_node("CHEMBL1350")
-        nodes = conn.get_chemical_substance_node("CHEMBL1350")
-        nodes = conn.get_chemical_substance_node("CHEMBL1350")
-        nodes = conn.get_chemical_substance_node("CHEMBL1350")
-
         conn.close()
 
     def test_get_chemical_substance_nodes(self):
@@ -137,8 +128,7 @@ class Neo4jConnectionTestCase(unittest.TestCase):
         nodes = conn.get_chemical_substance_nodes()
 
         self.assertIsNotNone(nodes)
-        self.assertEqual(len(nodes), 2075)
-        self.assertEqual(nodes[0], "CHEMBL1350")
+        self.assertEqual(len(nodes), 2227)
 
         conn.close()
 
@@ -168,7 +158,6 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(len(nodes), 21130)
-        self.assertEqual(nodes[0], "GO:0097289")
 
         conn.close()
 
