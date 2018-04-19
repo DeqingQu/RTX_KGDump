@@ -8,6 +8,10 @@ import unittest
 import json
 import random
 
+import os,sys
+parentdir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0,parentdir)
+
 from Neo4jConnection import Neo4jConnection
 from QueryBioLinkExtended import QueryBioLinkExtended
 from QueryMyGene import QueryMyGene
