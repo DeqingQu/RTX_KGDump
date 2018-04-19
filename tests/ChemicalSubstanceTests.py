@@ -44,10 +44,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             #   retrieve data from Neo4j
             node_id = nodes[i]
             extended_info_json_from_api = QueryMyChem.get_chemical_substance_entity(node_id)
+            print("extended_info_json_from_api is done!")
             self.assertIsNotNone(extended_info_json_from_api)
 
             # retrieve phenotype entities from BioLink API
             node = conn.get_chemical_substance_node(node_id)
+            print("conn.get_chemical_substance_node is done!")
             self.assertIsNotNone(node['n']['name'])
             self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['name'])
