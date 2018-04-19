@@ -20,7 +20,7 @@ def get_from_test_file(key):
         return None
 
 
-class QueryProteinEntityTestCase(unittest.TestCase):
+class QueryMyGeneExtendedTestCase(unittest.TestCase):
 
     def test_get_protein_entity(self):
 
