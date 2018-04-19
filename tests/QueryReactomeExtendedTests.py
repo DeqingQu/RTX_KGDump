@@ -25,6 +25,8 @@ class QueryReactomeExtendedTestCase(unittest.TestCase):
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
         self.assertEqual(extended_info_json, get_from_test_file('R-HSA-5579024'))
+        if extended_info_json != "UNKNOWN":
+            self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('R-HSA-5579024')))
 
 
 if __name__ == '__main__':
