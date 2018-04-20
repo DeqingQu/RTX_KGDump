@@ -160,7 +160,7 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             self.assertIsNotNone(node['n']['extended_info_json'])
             self.assertEqual(node_id, node['n']['id'])
             if node['n']['extended_info_json'] != "UNKNOWN":
-                self.assertEqual(len(json.loads(extended_info_json_from_api)), json.loads(len(node['n']['extended_info_json'])))
+                self.assertEqual(len(json.loads(extended_info_json_from_api)), len(json.loads(node['n']['extended_info_json'])))
 
         conn.close()
 
