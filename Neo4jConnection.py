@@ -159,7 +159,7 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_chemical_substance_nodes(tx):
-        result = tx.run("MATCH (n:chemical_substance) RETURN n.id LIMIT 200")
+        result = tx.run("MATCH (n:chemical_substance) RETURN n.id")
         return [record["n.id"] for record in result]
 
     @staticmethod
