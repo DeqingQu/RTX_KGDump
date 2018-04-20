@@ -9,7 +9,7 @@ from QueryBioLinkExtended import QueryBioLinkExtended as QBLEx
 
 
 def get_from_test_file(key):
-    f = open('test_data.json', 'r')
+    f = open('query_test_data.json', 'r')
     test_data = f.read()
     try:
         test_data_dict = json.loads(test_data)

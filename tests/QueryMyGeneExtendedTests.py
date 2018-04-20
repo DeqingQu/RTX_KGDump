@@ -9,7 +9,7 @@ from QueryMyGeneExtended import QueryMyGeneExtended
 
 
 def get_from_test_file(key):
-    f = open('test_data.json', 'r')
+    f = open('query_test_data.json', 'r')
     test_data = f.read()
     try:
         test_data_dict = json.loads(test_data)
@@ -28,7 +28,7 @@ class QueryMyGeneExtendedTestCase(unittest.TestCase):
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
         if extended_info_json != "UNKNOWN":
-            self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('UniProt:O60884')))
+            self.assertEqual(len(json.loads(extended_info_json)), len(json.loads(get_from_test_file('UniProt:O60884'))))
 
     def test_get_microRNA_entity(self):
 
@@ -36,7 +36,7 @@ class QueryMyGeneExtendedTestCase(unittest.TestCase):
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
         if extended_info_json != "UNKNOWN":
-            self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('NCBIGene: 100847086')))
+            self.assertEqual(len(json.loads(extended_info_json)), len(json.loads(get_from_test_file('NCBIGene: 100847086'))))
 
 
 if __name__ == '__main__':

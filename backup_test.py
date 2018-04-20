@@ -15,12 +15,12 @@ import json
 #               relationships counter : 2508369
 ### END HOW TO RUN
 
-### BEGIN config.json format
+### BEGIN user_pass.json format
 # {
 #   "username":"xxx",
 #   "password":"xxx"
 # }
-### END config.json format
+### END user_pass.json format
 
 class TestBackup(object):
 
@@ -52,12 +52,12 @@ class TestBackup(object):
 
 if __name__ == '__main__':
 
-    f = open('config.json', 'r')
-    configData = f.read()
+    f = open('user_pass.json', 'r')
+    userData = f.read()
     f.close()
-    config = json.loads(configData)
+    user = json.loads(userData)
 
-    obj = TestBackup(config['url'], config['username'], config['password'])
+    obj = TestBackup("bolt://localhost:7687", user['username'], user['password'])
     obj.print_node_count()
     obj.print_relation_count()
     obj.close()

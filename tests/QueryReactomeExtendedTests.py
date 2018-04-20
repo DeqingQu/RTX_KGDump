@@ -8,7 +8,7 @@ sys.path.insert(0,parentdir)
 from QueryReactomeExtended import QueryReactomeExtended as QREx
 
 def get_from_test_file(key):
-    f = open('test_data.json', 'r')
+    f = open('query_test_data.json', 'r')
     test_data = f.read()
     try:
         test_data_dict = json.loads(test_data)
@@ -21,11 +21,11 @@ def get_from_test_file(key):
 
 class QueryReactomeExtendedTestCase(unittest.TestCase):
     def test_get_anatomy_entity(self):
-        extended_info_json = QREx.get_pathway_entity('R-HSA-5579024')
+        extended_info_json = QREx.get_pathway_entity('Reactome:R-HSA-70326')
         self.maxDiff = None
         self.assertIsNotNone(extended_info_json)
         if extended_info_json != "UNKNOWN":
-            self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('R-HSA-5579024')))
+            self.assertEqual(json.loads(extended_info_json), json.loads(get_from_test_file('Reactome:R-HSA-70326')))
 
 
 if __name__ == '__main__':

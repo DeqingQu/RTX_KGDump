@@ -1,9 +1,3 @@
-"""
-    Run this module outside `tests` folder.
-        $ cd [git repo]/code/reasoningtool/
-        $ python3 -m unittest tests/UpdateNodesInfoTests.py
-"""
-
 import unittest
 import json
 import random
@@ -49,9 +43,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_anatomy_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
@@ -77,9 +71,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_phenotype_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
@@ -105,12 +99,12 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_microRNA_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
-                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+                self.assertEqual(len(json.loads(extended_info_json_from_api)), len(json.loads(node['n']['extended_info_json'])))
 
         conn.close()
 
@@ -133,9 +127,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_pathway_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
@@ -162,11 +156,11 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
             # retrieve data from Neo4j
             node = conn.get_protein_node(node_id)
             self.maxDiff = None
-            self.assertIsNotNone(node['n']['curie_id'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['curie_id'])
+            self.assertEqual(node_id, node['n']['id'])
             if node['n']['extended_info_json'] != "UNKNOWN":
-                self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
+                self.assertEqual(len(json.loads(extended_info_json_from_api)), json.loads(len(node['n']['extended_info_json'])))
 
         conn.close()
 
@@ -189,9 +183,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_disease_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
@@ -217,9 +211,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_chemical_substance_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
@@ -245,9 +239,9 @@ class UpdateNodesInfoTestCase(unittest.TestCase):
 
             # retrieve data from Neo4j
             node = conn.get_bio_process_node(node_id)
-            self.assertIsNotNone(node['n']['name'])
+            self.assertIsNotNone(node['n']['id'])
             self.assertIsNotNone(node['n']['extended_info_json'])
-            self.assertEqual(node_id, node['n']['name'])
+            self.assertEqual(node_id, node['n']['id'])
             self.maxDiff = None
             if node['n']['extended_info_json'] != "UNKNOWN":
                 self.assertEqual(json.loads(extended_info_json_from_api), json.loads(node['n']['extended_info_json']))
