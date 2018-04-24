@@ -28,3 +28,13 @@ class QueryEBIOLSExtendedTestCases(TestCase):
         desc = QEBIEx.get_anatomy_description('CL:0000038')
         self.assertIsNotNone(desc)
         self.assertEqual(desc, get_from_test_file('CL:0000038'))
+
+    def test_get_phenotype_description(self):
+        desc = QEBIEx.get_phenotype_description('GO:0042535')
+        self.assertIsNotNone(desc)
+        self.assertEqual(desc, get_from_test_file('GO:0042535'))
+
+    def test_get_bio_process_description(self):
+        desc = QEBIEx.get_bio_process_description('HP:0011105')
+        self.assertIsNotNone(desc)
+        self.assertEqual(desc, get_from_test_file('HP:0011105'))

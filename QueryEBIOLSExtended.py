@@ -39,7 +39,7 @@ class QueryEBIOLSExtended:
     def __access_api(handler):
 
         url = QueryEBIOLSExtended.API_BASE_URL + '/' + handler
-        print(url)
+        # print(url)
         try:
             res = requests.get(url, timeout=QueryEBIOLSExtended.TIMEOUT_SEC)
         except requests.exceptions.Timeout:
@@ -101,8 +101,8 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    # save_to_test_file('UBERON:0004476', QueryEBIOLSExtended.get_anatomy_description('UBERON:0004476'))
-    # save_to_test_file('CL:0000038', QueryEBIOLSExtended.get_anatomy_description('CL:0000038'))
-    # save_to_test_file('GO:0042535', QueryEBIOLSExtended.get_bio_process_description('GO:0042535'))
-    # print(QueryEBIOLSExtended.get_phenotype_description('HP:0011105'))
-    print(QueryEBIOLSExtended.get_disease_description('OMIM:613573'))
+    save_to_test_file('UBERON:0004476', QueryEBIOLSExtended.get_anatomy_description('UBERON:0004476'))
+    save_to_test_file('CL:0000038', QueryEBIOLSExtended.get_anatomy_description('CL:0000038'))
+    save_to_test_file('GO:0042535', QueryEBIOLSExtended.get_bio_process_description('GO:0042535'))
+    save_to_test_file('HP:0011105', QueryEBIOLSExtended.get_phenotype_description('HP:0011105'))
+    # print(QueryEBIOLSExtended.get_disease_description('OMIM:613573'))
