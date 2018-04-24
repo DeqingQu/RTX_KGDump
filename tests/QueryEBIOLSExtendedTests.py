@@ -25,3 +25,6 @@ class QueryEBIOLSExtendedTestCases(TestCase):
         desc = QEBIEx.get_anatomy_description('UBERON:0004476')
         self.assertIsNotNone(desc)
         self.assertEqual(desc, get_from_test_file('UBERON:0004476'))
+        desc = QEBIEx.get_anatomy_description('CL:0000038')
+        self.assertIsNotNone(desc)
+        self.assertEqual(desc, get_from_test_file('CL:0000038'))

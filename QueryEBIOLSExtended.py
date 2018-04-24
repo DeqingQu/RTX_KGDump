@@ -29,22 +29,22 @@ class QueryEBIOLSExtended:
     TIMEOUT_SEC = 120
     API_BASE_URL = 'https://www.ebi.ac.uk/ols/api/ontologies'
     HANDLER_MAP = {
-        'get_anatomy': 'uberon/terms/{id}',
+        'get_anatomy': '{ontology}/terms/{id}',
         'get_phenotype': 'phenotype/{id}',
-        'get_disease': 'disease/{id}',
-        'get_bio_process': '{id}'
+        'get_disease': 'go/terms/{id}',
+        'get_bio_process': '{ontology}/terms/{id}'
     }
 
     @staticmethod
     def __access_api(handler):
 
         url = QueryEBIOLSExtended.API_BASE_URL + '/' + handler
-
+        print(url)
         try:
             res = requests.get(url, timeout=QueryEBIOLSExtended.TIMEOUT_SEC)
         except requests.exceptions.Timeout:
             print(url, file=sys.stderr)
-            print('Timeout in QueryBioLink for URL: ' + url, file=sys.stderr)
+            print('Timeout in QueryEBIOLSExtended for URL: ' + url, file=sys.stderr)
             return None
         status_code = res.status_code
         if status_code != 200:
@@ -56,9 +56,10 @@ class QueryEBIOLSExtended:
 
     @staticmethod
     def __get_entity(entity_type, entity_id):
-        uberon_iri = "http://purl.obolibrary.org/obo/" + entity_id.replace(":", "_")
-        uberon_iri_double_encoded = urllib.parse.quote_plus(urllib.parse.quote_plus(uberon_iri))
-        handler = QueryEBIOLSExtended.HANDLER_MAP[entity_type].format(id=uberon_iri_double_encoded)
+        ontology_id = entity_id[:entity_id.find(":")]
+        iri = "http://purl.obolibrary.org/obo/" + entity_id.replace(":", "_")
+        iri_double_encoded = urllib.parse.quote_plus(urllib.parse.quote_plus(iri))
+        handler = QueryEBIOLSExtended.HANDLER_MAP[entity_type].format(ontology=ontology_id.lower(), id=iri_double_encoded)
         results = QueryEBIOLSExtended.__access_api(handler)
         result_str = 'UNKNOWN'
         if results is not None:
@@ -72,6 +73,11 @@ class QueryEBIOLSExtended:
     @staticmethod
     def get_anatomy_description(anatomy_id):
         return QueryEBIOLSExtended.__get_entity("get_anatomy", anatomy_id)
+
+    @staticmethod
+    def get_bio_process_description(bio_process_id):
+        return QueryEBIOLSExtended.__get_entity("get_bio_process", bio_process_id)
+
 
 
 if __name__ == '__main__':
@@ -89,3 +95,5 @@ if __name__ == '__main__':
         f.close()
 
     save_to_test_file('UBERON:0004476', QueryEBIOLSExtended.get_anatomy_description('UBERON:0004476'))
+    save_to_test_file('CL:0000038', QueryEBIOLSExtended.get_anatomy_description('CL:0000038'))
+    save_to_test_file('GO:0042535', QueryEBIOLSExtended.get_bio_process_description('GO:0042535'))

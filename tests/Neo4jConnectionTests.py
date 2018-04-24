@@ -104,7 +104,7 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertEqual(nodes['n']['id'], "ChEMBL:1350")
-
+        
         conn.close()
 
     def test_get_chemical_substance_nodes(self):
@@ -118,6 +118,7 @@ class Neo4jConnectionTestCase(unittest.TestCase):
 
         self.assertIsNotNone(nodes)
         self.assertLess(0, len(nodes))
+
         conn.close()
 
     def test_get_bio_process_node(self):

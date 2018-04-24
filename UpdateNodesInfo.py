@@ -38,6 +38,7 @@ __status__ = 'Prototype'
 
 from Neo4jConnection import Neo4jConnection
 import json
+from QueryEBIOLSExtended import QueryEBIOLSExtended
 
 
 class UpdateNodesInfo:
@@ -130,13 +131,67 @@ class UpdateNodesInfo:
     def update_bio_process_nodes():
         UpdateNodesInfo.__update_nodes('bio_process')
 
+    @staticmethod
+    def update_anatomy_nodes_desc():
+        f = open('config.json', 'r')
+        config_data = f.read()
+        f.close()
+        config = json.loads(config_data)
+
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
+        nodes = conn.get_anatomy_nodes()
+        print(len(nodes))
+
+        from time import time
+        t = time()
+
+        nodes_array = []
+        for i, node_id in enumerate(nodes):
+            node = dict()
+            node['node_id'] = node_id
+            node['desc'] = QueryEBIOLSExtended.get_anatomy_description(node_id)
+            nodes_array.append(node)
+            print("anatomy node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
+
+        print("api pulling time: %f" % (time() - t))
+
+        conn.close()
+
+    @staticmethod
+    def update_bio_process_nodes_desc():
+        f = open('config.json', 'r')
+        config_data = f.read()
+        f.close()
+        config = json.loads(config_data)
+
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
+        nodes = conn.get_bio_process_nodes()
+        print(len(nodes))
+
+        from time import time
+        t = time()
+
+        nodes_array = []
+        for i, node_id in enumerate(nodes):
+            node = dict()
+            node['node_id'] = node_id
+            node['desc'] = QueryEBIOLSExtended.get_bio_process_description(node_id)
+            nodes_array.append(node)
+            print("anatomy node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
+
+        print("api pulling time: %f" % (time() - t))
+
+        conn.close()
+
 if __name__ == '__main__':
 
-    UpdateNodesInfo.update_anatomy_nodes()
-    UpdateNodesInfo.update_phenotype_nodes()
-    UpdateNodesInfo.update_microRNA_nodes()
-    UpdateNodesInfo.update_pathway_nodes()
-    UpdateNodesInfo.update_protein_nodes()
-    UpdateNodesInfo.update_disease_nodes()
-    UpdateNodesInfo.update_chemical_substance_nodes()
-    UpdateNodesInfo.update_bio_process_nodes()
+    # UpdateNodesInfo.update_anatomy_nodes()
+    # UpdateNodesInfo.update_phenotype_nodes()
+    # UpdateNodesInfo.update_microRNA_nodes()
+    # UpdateNodesInfo.update_pathway_nodes()
+    # UpdateNodesInfo.update_protein_nodes()
+    # UpdateNodesInfo.update_disease_nodes()
+    # UpdateNodesInfo.update_chemical_substance_nodes()
+    # UpdateNodesInfo.update_bio_process_nodes()
+    UpdateNodesInfo.update_anatomy_nodes_desc()
+    # UpdateNodesInfo.update_bio_process_nodes_desc()
