@@ -148,7 +148,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes[:100]):
+        for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             node['desc'] = QueryEBIOLSExtended.get_anatomy_description(node_id)
@@ -185,7 +185,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes[:100]):
+        for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             node['desc'] = QueryEBIOLSExtended.get_phenotype_description(node_id)
@@ -222,7 +222,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes[:150]):
+        for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             if node_id[:4] == "OMIM":
@@ -264,7 +264,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes[:100]):
+        for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             node['desc'] = QueryEBIOLSExtended.get_bio_process_description(node_id)
