@@ -18,6 +18,12 @@
 #   sudo chmod -R 755 /var/www/html
 ### END PREREQUISITE
 
+### BEGIN HOW TO LOAD
+#   command:
+#   neo4j-admin load --from=[absolute directory]/xxxx.cypher --database=graph --force
+#   ref: https://neo4j.com/docs/operations-manual/current/tools/dump-load/
+### END HOW TO LOAD
+
 # Author: Deqing Qu
 
 set -e
@@ -42,6 +48,7 @@ service neo4j start
 echo 'zip the backup file ...'
 cd /mnt/data/backup/
 tar -czvf $file.tar.gz $file.cypher
+rm $file.cypher
 
 echo 'start transfering the backup file ...'
 chown rt:rt $file.tar.gz
