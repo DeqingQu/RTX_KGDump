@@ -105,3 +105,4 @@ ENV/
 .DS_Store
 orangeboard.sqlite
 config.json
+result_output.txt

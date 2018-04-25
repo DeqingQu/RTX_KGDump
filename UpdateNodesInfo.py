@@ -138,9 +138,11 @@ class UpdateNodesInfo:
         f.close()
         config = json.loads(config_data)
 
+        rf = open("result_output.txt", 'a')
+
         conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_anatomy_nodes()
-        print(len(nodes))
+        print("anatomy: %d"%len(nodes), file=rf)
 
         from time import time
         t = time()
@@ -152,7 +154,7 @@ class UpdateNodesInfo:
             node['desc'] = QueryEBIOLSExtended.get_anatomy_description(node_id)
             nodes_array.append(node)
 
-        print("anatomy api pulling time: %f" % (time() - t))
+        print("anatomy api pulling time: %f" % (time() - t), file=rf)
 
         nodes_nums = len(nodes_array)
         chunk_size = 10000
@@ -162,7 +164,7 @@ class UpdateNodesInfo:
             end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
             conn.update_anatomy_nodes_desc(nodes_array[start:end])
 
-        print("total time: %f" % (time() - t))
+        print("total time: %f" % (time() - t), file=rf)
 
         conn.close()
 
@@ -173,9 +175,11 @@ class UpdateNodesInfo:
         f.close()
         config = json.loads(config_data)
 
+        rf = open("result_output.txt", 'a')
+
         conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_phenotype_nodes()
-        print(len(nodes))
+        print("phenotype: %d"%len(nodes), file=rf)
 
         from time import time
         t = time()
@@ -187,7 +191,7 @@ class UpdateNodesInfo:
             node['desc'] = QueryEBIOLSExtended.get_phenotype_description(node_id)
             nodes_array.append(node)
 
-        print("phenotype api pulling time: %f" % (time() - t))
+        print("phenotype api pulling time: %f" % (time() - t), file=rf)
 
         nodes_nums = len(nodes_array)
         chunk_size = 10000
@@ -197,7 +201,7 @@ class UpdateNodesInfo:
             end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
             conn.update_phenotype_nodes_desc(nodes_array[start:end])
 
-        print("total time: %f" % (time() - t))
+        print("total time: %f" % (time() - t), file=rf)
 
         conn.close()
 
@@ -208,9 +212,11 @@ class UpdateNodesInfo:
         f.close()
         config = json.loads(config_data)
 
+        rf = open("result_output.txt", 'a')
+
         conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_disease_nodes()
-        print(len(nodes))
+        print("disease: %d"%len(nodes), file=rf)
 
         from time import time
         t = time()
@@ -225,7 +231,7 @@ class UpdateNodesInfo:
                 node['desc'] = QueryEBIOLSExtended.get_disease_description(node_id)
             nodes_array.append(node)
 
-        print("disease api pulling time: %f" % (time() - t))
+        print("disease api pulling time: %f" % (time() - t), file=rf)
 
         nodes_nums = len(nodes_array)
         chunk_size = 10000
@@ -235,7 +241,9 @@ class UpdateNodesInfo:
             end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
             conn.update_disease_nodes_desc(nodes_array[start:end])
 
-        print("total time: %f" % (time() - t))
+        print("total time: %f" % (time() - t), file=rf)
+
+        rf.close()
 
         conn.close()
 
@@ -246,9 +254,11 @@ class UpdateNodesInfo:
         f.close()
         config = json.loads(config_data)
 
+        rf = open("result_output.txt", 'a')
+
         conn = Neo4jConnection(config['url'], config['username'], config['password'])
         nodes = conn.get_bio_process_nodes()
-        print(len(nodes))
+        print("bio_process: %d"%len(nodes), file=rf)
 
         from time import time
         t = time()
@@ -260,7 +270,7 @@ class UpdateNodesInfo:
             node['desc'] = QueryEBIOLSExtended.get_bio_process_description(node_id)
             nodes_array.append(node)
 
-        print("bio_process api pulling time: %f" % (time() - t))
+        print("api pulling time: %f" % (time() - t), file=rf)
 
         nodes_nums = len(nodes_array)
         chunk_size = 10000
@@ -270,7 +280,9 @@ class UpdateNodesInfo:
             end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
             conn.update_bio_process_nodes_desc(nodes_array[start:end])
 
-        print("total time: %f" % (time() - t))
+        print("total time: %f" % (time() - t), file=rf)
+
+        rf.close()
 
         conn.close()
 
@@ -285,6 +297,7 @@ if __name__ == '__main__':
     # UpdateNodesInfo.update_chemical_substance_nodes()
     # UpdateNodesInfo.update_bio_process_nodes()
     UpdateNodesInfo.update_anatomy_nodes_desc()
-    UpdateNodesInfo.update_bio_process_nodes_desc()
-    UpdateNodesInfo.update_disease_nodes_desc()
     UpdateNodesInfo.update_phenotype_nodes_desc()
+    UpdateNodesInfo.update_disease_nodes_desc()
+    UpdateNodesInfo.update_bio_process_nodes_desc()
+
