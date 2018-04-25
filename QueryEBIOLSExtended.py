@@ -61,9 +61,10 @@ class QueryEBIOLSExtended:
         iri_double_encoded = urllib.parse.quote_plus(urllib.parse.quote_plus(iri))
         handler = QueryEBIOLSExtended.HANDLER_MAP[entity_type].format(ontology=ontology_id.lower(), id=iri_double_encoded)
         results = QueryEBIOLSExtended.__access_api(handler)
-        result_str = 'UNKNOWN'
+        result_str = None
         if results is not None:
             res_json = json.loads(results)
+            print(res_json)
             res_description = res_json.get("description", None)
             if res_description is not None:
                 if len(res_description) > 0:
