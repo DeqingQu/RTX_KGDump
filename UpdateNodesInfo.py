@@ -146,14 +146,23 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes):
+        for i, node_id in enumerate(nodes[:100]):
             node = dict()
             node['node_id'] = node_id
             node['desc'] = QueryEBIOLSExtended.get_anatomy_description(node_id)
             nodes_array.append(node)
-            print("anatomy node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
 
-        print("api pulling time: %f" % (time() - t))
+        print("anatomy api pulling time: %f" % (time() - t))
+
+        nodes_nums = len(nodes_array)
+        chunk_size = 10000
+        group_nums = nodes_nums // chunk_size + 1
+        for i in range(group_nums):
+            start = i * chunk_size
+            end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
+            conn.update_anatomy_nodes_desc(nodes_array[start:end])
+
+        print("total time: %f" % (time() - t))
 
         conn.close()
 
@@ -172,40 +181,23 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes):
+        for i, node_id in enumerate(nodes[:100]):
             node = dict()
             node['node_id'] = node_id
             node['desc'] = QueryEBIOLSExtended.get_phenotype_description(node_id)
             nodes_array.append(node)
-            print("Biomedical Process node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
 
-        print("api pulling time: %f" % (time() - t))
+        print("phenotype api pulling time: %f" % (time() - t))
 
-        conn.close()
+        nodes_nums = len(nodes_array)
+        chunk_size = 10000
+        group_nums = nodes_nums // chunk_size + 1
+        for i in range(group_nums):
+            start = i * chunk_size
+            end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
+            conn.update_phenotype_nodes_desc(nodes_array[start:end])
 
-    @staticmethod
-    def update_bio_process_nodes_desc():
-        f = open('config.json', 'r')
-        config_data = f.read()
-        f.close()
-        config = json.loads(config_data)
-
-        conn = Neo4jConnection(config['url'], config['username'], config['password'])
-        nodes = conn.get_bio_process_nodes()
-        print(len(nodes))
-
-        from time import time
-        t = time()
-
-        nodes_array = []
-        for i, node_id in enumerate(nodes):
-            node = dict()
-            node['node_id'] = node_id
-            node['desc'] = QueryEBIOLSExtended.get_bio_process_description(node_id)
-            nodes_array.append(node)
-            print("Biomedical Process node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
-
-        print("api pulling time: %f" % (time() - t))
+        print("total time: %f" % (time() - t))
 
         conn.close()
 
@@ -224,7 +216,7 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
-        for i, node_id in enumerate(nodes):
+        for i, node_id in enumerate(nodes[:150]):
             node = dict()
             node['node_id'] = node_id
             if node_id[:4] == "OMIM":
@@ -232,12 +224,55 @@ class UpdateNodesInfo:
             elif node_id[:4] == "DOID":
                 node['desc'] = QueryEBIOLSExtended.get_disease_description(node_id)
             nodes_array.append(node)
-            print("Disease node No. %d : %s; desc : %s" % (i, node_id, node['desc']))
 
-        print("api pulling time: %f" % (time() - t))
+        print("disease api pulling time: %f" % (time() - t))
+
+        nodes_nums = len(nodes_array)
+        chunk_size = 10000
+        group_nums = nodes_nums // chunk_size + 1
+        for i in range(group_nums):
+            start = i * chunk_size
+            end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
+            conn.update_disease_nodes_desc(nodes_array[start:end])
+
+        print("total time: %f" % (time() - t))
 
         conn.close()
 
+    @staticmethod
+    def update_bio_process_nodes_desc():
+        f = open('config.json', 'r')
+        config_data = f.read()
+        f.close()
+        config = json.loads(config_data)
+
+        conn = Neo4jConnection(config['url'], config['username'], config['password'])
+        nodes = conn.get_bio_process_nodes()
+        print(len(nodes))
+
+        from time import time
+        t = time()
+
+        nodes_array = []
+        for i, node_id in enumerate(nodes[:100]):
+            node = dict()
+            node['node_id'] = node_id
+            node['desc'] = QueryEBIOLSExtended.get_bio_process_description(node_id)
+            nodes_array.append(node)
+
+        print("bio_process api pulling time: %f" % (time() - t))
+
+        nodes_nums = len(nodes_array)
+        chunk_size = 10000
+        group_nums = nodes_nums // chunk_size + 1
+        for i in range(group_nums):
+            start = i * chunk_size
+            end = (i + 1) * chunk_size if (i + 1) * chunk_size < nodes_nums else nodes_nums
+            conn.update_bio_process_nodes_desc(nodes_array[start:end])
+
+        print("total time: %f" % (time() - t))
+
+        conn.close()
 
 if __name__ == '__main__':
 
@@ -249,7 +284,7 @@ if __name__ == '__main__':
     # UpdateNodesInfo.update_disease_nodes()
     # UpdateNodesInfo.update_chemical_substance_nodes()
     # UpdateNodesInfo.update_bio_process_nodes()
-    # UpdateNodesInfo.update_anatomy_nodes_desc()
-    # UpdateNodesInfo.update_bio_process_nodes_desc()
-    # UpdateNodesInfo.update_disease_nodes_desc()
+    UpdateNodesInfo.update_anatomy_nodes_desc()
+    UpdateNodesInfo.update_bio_process_nodes_desc()
+    UpdateNodesInfo.update_disease_nodes_desc()
     UpdateNodesInfo.update_phenotype_nodes_desc()
