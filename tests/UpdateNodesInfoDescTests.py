@@ -8,7 +8,7 @@ sys.path.insert(0,parentdir)
 
 from Neo4jConnection import Neo4jConnection
 from QueryEBIOLSExtended import QueryEBIOLSExtended
-from QueryOMIM import QueryOMIM
+from QueryOMIMExtended import QueryOMIM
 
 
 def random_int_list(start, stop, length):

@@ -39,7 +39,7 @@ __status__ = 'Prototype'
 from Neo4jConnection import Neo4jConnection
 import json
 from QueryEBIOLSExtended import QueryEBIOLSExtended
-from QueryOMIM import QueryOMIM
+from QueryOMIMExtended import QueryOMIM
 
 class UpdateNodesInfo:
 
