@@ -45,6 +45,30 @@ class QueryMyGeneExtended:
             result_str = json.dumps(json_dict)
         return result_str
 
+    @staticmethod
+    def get_protein_desc(protein_id):
+        result_str = QueryMyGeneExtended.get_protein_entity(protein_id)
+        desc = "UNKNOWN"
+        if result_str != "UNKNOWN":
+            result_dict = json.loads(result_str)
+            if "hits" in result_dict.keys():
+                if len(result_dict["hits"]) > 0:
+                    if "summary" in result_dict["hits"][0].keys():
+                        desc = result_dict["hits"][0]["summary"]
+        return desc
+
+    @staticmethod
+    def get_microRNA_desc(protein_id):
+        result_str = QueryMyGeneExtended.get_microRNA_entity(protein_id)
+        desc = "UNKNOWN"
+        if result_str != "UNKNOWN":
+            result_dict = json.loads(result_str)
+            if "hits" in result_dict.keys():
+                if len(result_dict["hits"]) > 0:
+                    if "summary" in result_dict["hits"][0].keys():
+                        desc = result_dict["hits"][0]["summary"]
+        return desc
+
 if __name__ == '__main__':
 
     def save_to_test_file(key, value):
@@ -59,5 +83,19 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
+    def save_to_desc_test_file(key, value):
+        f = open('tests/query_desc_test_data.json', 'r+')
+        try:
+            json_data = json.load(f)
+        except ValueError:
+            json_data = {}
+        f.seek(0)
+        f.truncate()
+        json_data[key] = value
+        json.dump(json_data, f)
+        f.close()
+
     save_to_test_file('UniProt:O60884', QueryMyGeneExtended.get_protein_entity("UniProt:O60884"))
     save_to_test_file('NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_entity("NCBIGene: 100847086"))
+    save_to_desc_test_file('UniProt:O60884', QueryMyGeneExtended.get_protein_desc("UniProt:O60884"))
+    save_to_desc_test_file('NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_desc("NCBIGene:100847086"))
