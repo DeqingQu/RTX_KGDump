@@ -71,8 +71,8 @@ class QueryMyGeneExtended:
 
 if __name__ == '__main__':
 
-    def save_to_test_file(key, value):
-        f = open('tests/query_test_data.json', 'r+')
+    def save_to_test_file(filename, key, value):
+        f = open(filename, 'r+')
         try:
             json_data = json.load(f)
         except ValueError:
@@ -83,19 +83,7 @@ if __name__ == '__main__':
         json.dump(json_data, f)
         f.close()
 
-    def save_to_desc_test_file(key, value):
-        f = open('tests/query_desc_test_data.json', 'r+')
-        try:
-            json_data = json.load(f)
-        except ValueError:
-            json_data = {}
-        f.seek(0)
-        f.truncate()
-        json_data[key] = value
-        json.dump(json_data, f)
-        f.close()
-
-    save_to_test_file('UniProt:O60884', QueryMyGeneExtended.get_protein_entity("UniProt:O60884"))
-    save_to_test_file('NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_entity("NCBIGene: 100847086"))
-    save_to_desc_test_file('UniProt:O60884', QueryMyGeneExtended.get_protein_desc("UniProt:O60884"))
-    save_to_desc_test_file('NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_desc("NCBIGene:100847086"))
+    save_to_test_file('tests/query_test_data.json', 'UniProt:O60884', QueryMyGeneExtended.get_protein_entity("UniProt:O60884"))
+    save_to_test_file('tests/query_test_data.json', 'NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_entity("NCBIGene: 100847086"))
+    save_to_test_file('tests/query_desc_test_data.json', 'UniProt:O60884', QueryMyGeneExtended.get_protein_desc("UniProt:O60884"))
+    save_to_test_file('tests/query_desc_test_data.json', 'NCBIGene: 100847086', QueryMyGeneExtended.get_microRNA_desc("NCBIGene:100847086"))
