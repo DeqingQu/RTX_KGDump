@@ -20,7 +20,7 @@ def get_from_test_file(key):
         return None
 
 
-class QueryEBIOLSExtendedTestCases(TestCase):
+class QueryEBIOLSExtendedTestCase(TestCase):
     def test_get_anatomy_description(self):
         desc = QEBIEx.get_anatomy_description('UBERON:0004476')
         self.assertIsNotNone(desc)

@@ -17,7 +17,7 @@
 
 import unittest
 
-from UpdateNodesInfoTests import UpdateNodesInfoTestCase
+# from UpdateNodesInfoTests import UpdateNodesInfoTestCase
 from Neo4jConnectionTests import Neo4jConnectionTestCase
 from QueryBioLinkExtendedTests import QueryBioLinkExtendedTestCase
 from QueryMyChemTests import QueryMyChemTestCase
