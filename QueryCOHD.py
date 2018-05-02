@@ -30,6 +30,9 @@ obtain a "co-occurrence" probability between any two terms in medical records.
         double: returns a numeric frequency for clinical frequency of individual concept, or none if no frequency data
         could be obtained for the concept ID
 
+Test Cases in
+    [repo]/code/reasoningtool/kg-construction/tests/QueryCOHDTests.py
+
 '''
 
 __author__ = 'Deqing Qu'
@@ -61,8 +64,7 @@ class QueryCOHD:
         url = QueryCOHD.API_BASE_URL + '/' + handler + '?q=' + url_suffix
         
         try:
-            res = requests.get(url,
-                               timeout=QueryCOHD.TIMEOUT_SEC)
+            res = requests.get(url, timeout=QueryCOHD.TIMEOUT_SEC)
         except requests.exceptions.Timeout:
             print(url, file=sys.stderr)
             print('Timeout in QueryCOHD for URL: ' + url, file=sys.stderr)
