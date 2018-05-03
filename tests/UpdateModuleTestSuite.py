@@ -19,6 +19,7 @@ import unittest
 
 from UpdateNodesInfoTests import UpdateNodesInfoTestCase
 from UpdateNodesInfoDescTests import UpdateNodesInfoDescTestCase
+from UpdateNodesNameTests import UpdateNodesNameTestCase
 from Neo4jConnectionTests import Neo4jConnectionTestCase
 from QueryBioLinkExtendedTests import QueryBioLinkExtendedTestCase
 from QueryMyChemTests import QueryMyChemTestCase
@@ -28,12 +29,14 @@ from QueryOMIMExtendedTests import QueryOMIMExtendedTestCase
 from QueryEBIOLSExtendedTests import QueryEBIOLSExtendedTestCase
 from QueryUniprotExtendedTests import QueryUniprotExtendedTestCase
 
+
 class UpdateModuleTestSuite(unittest.TestSuite):
     def suite(self):
         suite = unittest.TestSuite()
 
         suite.addTest(UpdateNodesInfoTestCase())
-        suite.addTest(UpdateNodesInfoDescTestCase)
+        suite.addTest(UpdateNodesInfoDescTestCase())
+        suite.addTest(UpdateNodesNameTestCase())
         suite.addTest(Neo4jConnectionTestCase())
         suite.addTest(QueryBioLinkExtendedTestCase())
         suite.addTest(QueryMyChemTestCase())
