@@ -336,11 +336,12 @@ class UpdateNodesInfo:
         t = time()
 
         nodes_array = []
+        qo = QueryOMIM()
         for i, node_id in enumerate(nodes):
             node = dict()
             node['node_id'] = node_id
             if node_id[:4] == "OMIM":
-                node['desc'] = QueryOMIM().disease_mim_to_description(node_id)
+                node['desc'] = qo.disease_mim_to_description(node_id)
             elif node_id[:4] == "DOID":
                 node['desc'] = QueryEBIOLSExtended.get_disease_description(node_id)
             nodes_array.append(node)
