@@ -62,7 +62,20 @@ class QueryKEGG:
         kegg_id = kegg_id[5:]
         handler = QueryKEGG.HANDLER_MAP['map_kegg_compound_to_enzyme_commission_ids'].format(id=kegg_id)
         res = QueryKEGG.__access_api(handler)
-        return res
+        arr = []
+        if res is not None:
+            tab_pos = res.find('\t')
+            while tab_pos != -1:
+                return_pos = res.find('\n')
+                ec_id = res[tab_pos+1:return_pos]
+                arr.append(ec_id)
+                res = res[return_pos+1:]
+                tab_pos = res.find('\t')
+        return arr
 
 if __name__ == '__main__':
     print(QueryKEGG.map_kegg_compound_to_enzyme_commission_ids('KEGG:C00022'))
+    print(QueryKEGG.map_kegg_compound_to_enzyme_commission_ids('KEGG:C00100'))
+    print(QueryKEGG.map_kegg_compound_to_enzyme_commission_ids('KEGG:C00200'))
+    print(QueryKEGG.map_kegg_compound_to_enzyme_commission_ids('GO:2342343'))
+    print(QueryKEGG.map_kegg_compound_to_enzyme_commission_ids(1000))
