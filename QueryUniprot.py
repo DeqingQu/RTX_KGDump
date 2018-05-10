@@ -1,5 +1,18 @@
-""" This module defines the class QueryPharos which connects to APIs at
+""" This module defines the class QueryUniprot which connects to APIs at
 http://www.uniprot.org/uploadlists/, querying reactome pathways from uniprot id.
+
+*   map_enzyme_commission_id_to_uniprot_ids(ec_id)
+
+    Description:
+        map enzyme commission id to UniProt ids
+
+    Args:
+        ec_id (str): enzyme commission id, e.g., "ec:1.4.1.17"
+
+    Returns:
+        ids (set): a set of the enzyme commission ids, or empty set if no UniProt id can be obtained or the response
+                    status code is not 200.
+
 """
 
 __author__ = ""
@@ -19,6 +32,7 @@ import urllib.parse
 
 # configure requests package to use the "orangeboard.sqlite" cache
 requests_cache.install_cache('orangeboard')
+
 
 class QueryUniprot:
     API_BASE_URL = "http://www.uniprot.org/uploadlists/"
@@ -56,7 +70,7 @@ class QueryUniprot:
 
         api_base_url = 'http://www.uniprot.org'
         url = api_base_url + '/' + handler
-        print(url)
+        #print(url)
         contact = "stephen.ramsey@oregonstate.edu"
         header = {'User-Agent': 'Python %s' % contact}
         try:
@@ -73,12 +87,13 @@ class QueryUniprot:
         return res.text
 
     @staticmethod
-    @CachedMethods.register
     def map_enzyme_commission_id_to_uniprot_ids(ec_id):
+        res_set = set()
+        if not isinstance(ec_id, str):
+            return res_set
         ec_id_encoded = urllib.parse.quote_plus(ec_id)
         handler = QueryUniprot.HANDLER_MAP['map_enzyme_commission_id_to_uniprot_ids'].format(id=ec_id_encoded)
         res = QueryUniprot.__access_api(handler)
-        res_set = set()
         if res is not None:
             res = res[res.find('\n')+1:]
             for line in res.splitlines():
