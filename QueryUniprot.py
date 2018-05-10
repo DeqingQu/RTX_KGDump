@@ -56,8 +56,18 @@ class QueryUniprot:
                     'query':  uniprot_id }
         contact = "stephen.ramsey@oregonstate.edu"
         header = {'User-Agent': 'Python %s' % contact}
-        res = requests.post(QueryUniprot.API_BASE_URL, data=payload, headers=header)
-        assert 200 == res.status_code
+        try:
+            res = requests.post(QueryUniprot.API_BASE_URL, data=payload, headers=header)
+        except requests.exceptions.Timeout:
+            print(QueryUniprot.API_BASE_URL, file=sys.stderr)
+            print('Timeout in QueryUniprot for URL: ' + QueryUniprot.API_BASE_URL, file=sys.stderr)
+            return None
+        status_code = res.status_code
+        if status_code != 200:
+            print(QueryUniprot.API_BASE_URL, file=sys.stderr)
+            print('Status code ' + str(status_code) + ' for url: ' + QueryUniprot.API_BASE_URL, file=sys.stderr)
+            return None
+#        assert 200 == res.status_code
         res_set = set()
         for line in res.text.splitlines():
             field_str = line.split("\t")[1]
@@ -102,10 +112,10 @@ class QueryUniprot:
 
 
 if __name__ == '__main__':
-    # print(QueryUniprot.uniprot_id_to_reactome_pathways("P68871"))
-    # print(QueryUniprot.uniprot_id_to_reactome_pathways("Q16621"))
-    # print(QueryUniprot.uniprot_id_to_reactome_pathways("P09601"))
-    # print(CachedMethods.cache_info())
+    print(QueryUniprot.uniprot_id_to_reactome_pathways("P68871"))
+    print(QueryUniprot.uniprot_id_to_reactome_pathways("Q16621"))
+    print(QueryUniprot.uniprot_id_to_reactome_pathways("P09601"))
+    print(CachedMethods.cache_info())
 
     print(QueryUniprot.map_enzyme_commission_id_to_uniprot_ids("ec:1.4.1.17"))  # small results
     print(QueryUniprot.map_enzyme_commission_id_to_uniprot_ids("ec:1.3.1.110")) # empty result
