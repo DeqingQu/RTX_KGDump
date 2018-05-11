@@ -135,6 +135,10 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._get_bio_process_node, id)
 
+    def get_node(self, id):
+        with self._driver.session() as session:
+            return session.write_transaction(self._get_node, id)
+
     def update_anatomy_nodes_desc(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_anatomy_nodes_desc, nodes)
@@ -375,6 +379,11 @@ class Neo4jConnection:
     @staticmethod
     def _get_bio_process_node(tx, id):
         result = tx.run("MATCH (n:biological_process{id:'%s'}) RETURN n" % id)
+        return result.single()
+
+    @staticmethod
+    def _get_node(tx, id):
+        result = tx.run("MATCH (n{id:'%s'}) RETURN n" % id)
         return result.single()
 
     @staticmethod
