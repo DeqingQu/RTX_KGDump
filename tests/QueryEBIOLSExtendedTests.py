@@ -38,3 +38,13 @@ class QueryEBIOLSExtendedTestCase(TestCase):
         desc = QEBIEx.get_bio_process_description('HP:0011105')
         self.assertIsNotNone(desc)
         self.assertEqual(desc, get_from_test_file('HP:0011105'))
+
+    def test_get_cellular_component_description(self):
+        desc = QEBIEx.get_cellular_component_description('GO:0005573')
+        self.assertIsNotNone(desc)
+        self.assertEqual(desc, get_from_test_file('GO:0005573'))
+
+    def test_get_molecular_function_description(self):
+        desc = QEBIEx.get_molecular_function_description('GO:0004689')
+        self.assertIsNotNone(desc)
+        self.assertEqual(desc, get_from_test_file('GO:0004689'))
