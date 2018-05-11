@@ -167,6 +167,14 @@ class Neo4jConnection:
         with self._driver.session() as session:
             return session.write_transaction(self._update_bio_process_nodes_desc, nodes)
 
+    def update_cellular_component_nodes_desc(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_cellular_component_desc, nodes)
+
+    def update_molecular_function_nodes_desc(self, nodes):
+        with self._driver.session() as session:
+            return session.write_transaction(self._update_molecular_function_desc, nodes)
+
     def update_protein_nodes_name(self, nodes):
         with self._driver.session() as session:
             return session.write_transaction(self._update_protein_nodes_name, nodes)
@@ -217,12 +225,12 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_cellular_component_nodes(tx):
-        result = tx.run("MATCH (n:cellular_component) RETURN n.id")
+        result = tx.run("MATCH (n:cellular_component) RETURN n.id LIMIT 100")
         return [record["n.id"] for record in result]
 
     @staticmethod
     def _get_molecular_function_nodes(tx):
-        result = tx.run("MATCH (n:molecular_function) RETURN n.id")
+        result = tx.run("MATCH (n:molecular_function) RETURN n.id LIMIT 100")
         return [record["n.id"] for record in result]
 
     @staticmethod
