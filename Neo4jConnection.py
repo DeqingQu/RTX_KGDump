@@ -229,12 +229,12 @@ class Neo4jConnection:
 
     @staticmethod
     def _get_cellular_component_nodes(tx):
-        result = tx.run("MATCH (n:cellular_component) RETURN n.id LIMIT 100")
+        result = tx.run("MATCH (n:cellular_component) RETURN n.id")
         return [record["n.id"] for record in result]
 
     @staticmethod
     def _get_molecular_function_nodes(tx):
-        result = tx.run("MATCH (n:molecular_function) RETURN n.id LIMIT 100")
+        result = tx.run("MATCH (n:molecular_function) RETURN n.id")
         return [record["n.id"] for record in result]
 
     @staticmethod

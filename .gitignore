@@ -106,3 +106,5 @@ ENV/
 orangeboard.sqlite
 config.json
 result_output.txt
+
+node_modules
