@@ -18,7 +18,6 @@ __status__ = 'Prototype'
 import xmltodict
 import json
 
-
 class QueryHMDB:
     @staticmethod
     def get_metabolite_desc(names):
@@ -26,14 +25,13 @@ class QueryHMDB:
         with open('csf_metabolites.xml') as fd:
             doc = xmltodict.parse(fd.read())
             for name in names:
-                notFound = True
+                not_found = True
                 for metabolite in doc['hmdb']['metabolite']:
                     if metabolite['name'] == name:
                         results[name] = metabolite['description']
-                        notFound = False
-                if notFound:
+                        not_found = False
+                if not_found:
                     results[name] = None
-
         return results
 
 
