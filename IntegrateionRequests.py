@@ -69,20 +69,19 @@ class IntegrationRequests:
 
         #   post request
         url_suffix = "query"
-        post_data = {
-            "bypass_cache": "true",
-            "known_query_type_id": "Q1",
+        payload = {
+            "bypass_cache": "false",
+            "known_query_type_id": "Q3",
             "max_results": 100,
-            "message": "Your question was understood.",
-            "original_question": "what genetic conditions offer protection against IBUPROFEN",
-            "page_number": 1,
-            "page_size": 100,
-            "restated_question": "Which genetic conditions may offer protection against IBUPROFEN?",
+            "original_question": "What proteins does acetaminophen target?",
+            "restated_question": "What proteins are the target of acetaminophen",
             "terms": {
-                "disease": "IBUPROFEN"
+                "chemical_substance": "CHEMBL521",
+                "rel_type": "directly_interacts_with",
+                "target_label": "protein"
             }
         }
-        response = IntegrationRequests.__post_api(url, url_suffix, post_data)
+        response = IntegrationRequests.__post_api(url, url_suffix, payload)
         print(mydict(response))
 
         #   post request from ROBOKOP
@@ -95,8 +94,8 @@ class IntegrationRequests:
                 "chemical_substance": "CHEMBL:CHEMBL521"
             },
             "max_results": 100,
-            "original_question": "What proteins does acetaminophen target?",
-            "restated_question": "What proteins are the target of acetaminophen"
+            "original_question": "What proteins does IBUPROFEN target?",
+            "restated_question": "What proteins are the target of IBUPROFEN"
         }
         response = IntegrationRequests.__post_api(url, url_suffix, payload)
         print(mydict(response))
