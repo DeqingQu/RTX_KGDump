@@ -3,6 +3,10 @@ import sys
 import json
 
 
+class mydict(dict):
+    def __str__(self):
+        return json.dumps(self)
+
 class IntegrationRequests:
     TIMEOUT_SEC = 120
 
@@ -70,16 +74,32 @@ class IntegrationRequests:
             "known_query_type_id": "Q1",
             "max_results": 100,
             "message": "Your question was understood.",
-            "original_question": "what genetic conditions offer protection against malaria",
+            "original_question": "what genetic conditions offer protection against IBUPROFEN",
             "page_number": 1,
             "page_size": 100,
-            "restated_question": "Which genetic conditions may offer protection against malaria?",
+            "restated_question": "Which genetic conditions may offer protection against IBUPROFEN?",
             "terms": {
-                "disease": "malaria"
+                "disease": "IBUPROFEN"
             }
         }
         response = IntegrationRequests.__post_api(url, url_suffix, post_data)
-        print(response)
+        print(mydict(response))
+
+        #   post request from ROBOKOP
+        url = "http://robokop.renci.org:6011/api/query"
+        url_suffix = ""
+        payload = {
+            "bypass_cache": "true",
+            "known_query_type_id": "Q3",
+            "terms": {
+                "chemical_substance": "CHEMBL:CHEMBL521"
+            },
+            "max_results": 100,
+            "original_question": "What proteins does acetaminophen target?",
+            "restated_question": "What proteins are the target of acetaminophen"
+        }
+        response = IntegrationRequests.__post_api(url, url_suffix, payload)
+        print(mydict(response))
 
 
 if __name__ == '__main__':
