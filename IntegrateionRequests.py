@@ -73,8 +73,8 @@ class IntegrationRequests:
             "bypass_cache": "false",
             "known_query_type_id": "Q3",
             "max_results": 100,
-            "original_question": "What proteins does acetaminophen target?",
-            "restated_question": "What proteins are the target of acetaminophen",
+            "original_question": "What proteins does IBUPROFEN target?",
+            "restated_question": "What proteins are the target of IBUPROFEN",
             "terms": {
                 "chemical_substance": "CHEMBL521",
                 "rel_type": "directly_interacts_with",
